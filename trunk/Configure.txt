@@ -1,0 +1,7 @@
+Je pense installer pywebsocket
+ataché a apache
+
+1. installer python
+
+http://www.cyberciti.biz/faq/ubuntu-mod_python-apache-tutorial/
+
