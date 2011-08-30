@@ -1,0 +1,54 @@
+I - Introduction 
+===================
+
+Le protocole app est un protocole de type tcp/ip repossant sur une couche websocket
+Les spécification de ce protocole afin de communiquer avec un serveur lis 
+seront décrite ci-dessous , ces spécification peuvent changer pendant les phase 
+de déploiment de fonctionalité il faudra attendre les dernier beta de la futur version
+1.0 qui seront consacrée uniquement a la correction de bug .
+
+P.S : Ce document sera complété d'un diagrame pour shématisé le dialogue client => serveur 
+
+Format des donéees : encapsulation JSON encodé en UTF-8
+
+II - Phase de dialogue 
+=========================
+
+  a . envoie de la version client du protocole client utilisé au serveur 
+      le serveur voit la viabilité avec sa version du protocole et peut
+      soit refusé la connection soit demandée au client de passer en rétro-compatibilité
+      dans les deux cas le serveur envoie un message d'etat , de version et d'information 
+      au format JSON 
+      
+      Etat : TRUE , RETRO , FALSE (numeric 1)
+      VERSION :  (écriture des numero de version non définie)
+      INFORMATION : chaine de caractere 
+      
+  b . le client envoie la liste des module de rendu dont ils dispose 
+      (sachant que selon le navigateur il ne peut pas utiliser certain module de rendu)
+      ainsi le serveur compare avec ceux d'ont 
+      ils dispose certain module de rendu sont obligatoire comme le rendu affichage et audio 
+      si le serveur a plusieur mode de rendu compatible avec le client il peut faire un etat de version 
+      des module client et serveur (implémentée plus tard) et choisir les module de rendu selon les priorité 
+      définie par la configuration de l'application . 
+      Une fois tout ces parametre établie si il n'a pas pu avoir de module de rendu compatible avec le client
+      il envoie un etat false avec la liste des module qu'il n'a pas a disposition pour indisponibilité ou
+      version trop ancienne/recente , avec le numero de version des module ainsi qu'un message d'erreur 
+      
+      // Les mode de retro-compatibilité pour module de rendu devront etre gérée par le client dans la version 1.0
+      
+      si au contraite il a reussit il envoie un etat true ainsi que la liste des module qu'il va utiliser
+      A cette etape le client et le serveur charge en memoire leur module de rendu respectif 
+      
+  c . Le client confirme que tout est ok et le serveur répond si tout est ok ou pas
+   
+      si c'est false alors il donne l'etat false et un message d'erreur personalisé 
+      si tout est ok alors il donne l'etat ok et le type de securité de connection 
+      ainsi que le type d'encryptage des échange et un challenge si le type n'est pas none
+      les type de sécurité disponible ne sont pas encore définie 
+      néanmoins le client envera l'identifiant et mot de passe s'il y a authentification 
+      non crypté si l'echange est sécurité et crypté s'il est sécurisé avec le challenge pour clef .
+      cette clef est conserver par le client et le serveur tout au long de la connection .
+      elle permet que seul le client et le serveur puissent décrypter leur échange .
+      
+  d . 

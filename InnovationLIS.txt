@@ -1,0 +1,27 @@
+Les prochaine innovations dans la structure de lis sont les suivante :
+
+- support du multi-touch (client/serveur)
+
+- Isolation des module dans lespace utilisateur en processus avec communication TCP/IP (principe des modules des micro-noyaux)
+
+- Ajout/Supression des modules pendant l'execution 
+(grace a des spécification technique dites interfaces le faite d'interchanger un module devient transparent)
+
+- Posibiliter pour le serveur d'application de lancer des application avec un utilisateur différent
+(lancer par exemple une application inconu avec des droits restraint pour eviter les application malveillante)
+
+- Ajout d'un outils d'exportation du client configurer pour l'application vers les format :
+   open web apps et chrome web store
+
+- Serveur d'application proxy sur port unique fesant offiche de firewall d'application logiciel communiquant avec les client en websocket
+et dispatchant les donée vers les socket interne d'application concernée .
+
+- Posibiliter de crée des application compacter avec processus d'activation nésésaire sous forme de fichier portant l'extension .lis 
+  (A voir car influe sur les performances)
+
+- Posibiliter d'enregistrer un handler de retour l'ors de l'apelle a une methode asynchronome
+  Sinon si réponse directe dans une fonction non asynchronome retour de la reponse par return
+  
+
+- Penser au multithread avec pcntl/sémaphore 
+http://www.noisette.ch/wiki/index.php/PHP/Multithread
