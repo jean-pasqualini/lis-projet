@@ -1,4 +1,11 @@
 <?php
+/*
+ Définie les couleur principale primaire via leur decomposition en Red Green Bleu
+ @author Jean pasqualini <jpasqualini75@gmail.com>
+ @version InDev
+ @license GPL
+*/
+ 
 define("ROUGE","255|0|0");
 define("VERT","0|255|0");
 define("BLEU","0|0|255");
