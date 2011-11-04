@@ -1,24 +1,80 @@
 <?php
 /*
+ @author Jean pasqualini <jpasqualini75@gmail.com>
+ @version InDev
+ @license GPL
  Mr pasqualini jean | 28/09/2010 
  Version de lis en expérimentation non stable .
  
- Pensez a ajouter la négociation par rapport
- au module du rendu
- a la version du client et du serveur 
+ @todo Négociation de module avec le client à faire
+ @todo Implémenter la gestion des erreurs en exception
 */
 Abstract Class ApplicationLIS {
     
+    /*
+     @access public
+     @static
+     @staticvar ApplicationLIS Contient la single instance (unique) de l'application
+    */
     public static $UniqueInstance = null;
+    
+    /*
+     @access public
+     @var  Socket Contient la connection socket
+    */
     public $instance;
+    
+    /*
+     @access public
+     @static
+     @staticvar Array Contients les instances des modules chargée
+    */
     public static $modules=array();
+    
+    /*
+     @access private
+     @static
+     @staticvar Array Contient les propriété css importer
+    */
     private static $css=array(); // Contient les propriété des css importer
+    
+    /*
+     @access private
+     @var string Contient le théme courant
+    */
     private $theme="default";
+    
+    /*
+     @access private
+     @var integer Contient le temp
+    */
     private $time;
+    
+    /*
+     @access private
+     @var integer contient le temp en seconde autoriser par thread
+    */
     private $time_thread = 5; //exprime en seconde
+    
+    /*
+     @access private
+     @var Array Contient les commande évenementiel recu en attente de lecture
+    */
     private $events = array();
+    
+    /*
+     @access private
+     @var Array Contient les retours recu en attente de lecture
+    */
     private $returns = array();
     
+  /*
+   Le constructeur de l'application initialise l'appplication
+   @access public
+   @param string $address L'adresse d'attente d'un client de l'application
+   @param integer $port Le port d'attente d'un client de l'appplication
+   @return ApplicationLIS Retourne l'instance courante de l'application
+  */
   public function __construct($address,$port){
     
     ApplicationLIS::$UniqueInstance = $this;
@@ -80,7 +136,12 @@ if(($ecoute = socket_listen($socket)) === false)
             return true;
 }
 
-
+/*
+ Retourne l'instance unique de l'application 
+ @access public
+ @static
+ @return ApplicationLis Retourne l'instance unique de l'application courante
+*/
 public static function GetInstance()
 {
 	if (ApplicationLIS::$UniqueInstance == null) {
@@ -90,11 +151,24 @@ public static function GetInstance()
 	return ApplicationLIS::$UniqueInstance;
 }
 
+/*
+ Retourne les propriété css déclaré de l'application
+ @access public
+ @static
+ @return Array Retourne les propriété css déclaré de l'application
+*/
 public static function GetCss()
 {
     return ApplicationLIS::$css;
 }
 
+/*
+ Retourne l'instance d'un module charge
+ @access public
+ @static
+ @param string $name_module Nom du module
+ @return ModuleBase Retourne l'instance du module
+*/
 public static function GetModule($name_module)
 {
 	echo "[INFO] demande du monde '".$name_module."'\n";
@@ -109,6 +183,13 @@ public static function GetModule($name_module)
     }
 }
 
+/*
+ Retourne true si le module existe sinon false
+ @access public
+ @static
+ @param string $name_module Nom du module
+ @return boolean Retourne true si le module existe sinon false
+*/
 public static function IssetModule($name_module)
 {
     if(empty(ApplicationLIS::$modules[$name_module]))
@@ -132,6 +213,10 @@ public static function IssetModule($name_module)
  ex : $this->view->UpdateMouse(); devient $this->UpdateMouse();
  
  Attention diminue forcement les performance globale de l'application
+ @access public
+ @param string $name Nom de la méthode
+ @param Array Liste des paramétre
+ @return inconu Retourne false si la méthode n'a pas été trouver sinon retourne le retour de la méthode
 */
 public function __call($name,$arguments)
 {
@@ -150,7 +235,16 @@ public function __call($name,$arguments)
 
 
 
-// Ajoute un module a chaud
+/*
+  Ajoute un module à chaud
+  Les modules se trouvent dans le dossier module et
+  ont pour nom  '___nommodule___.php' et pour nom de classe 'module__nommodule'
+
+  @access public
+  @param string $module Nom du module a charger 
+  @param Array $parametre Liste des paramétre à passer au contructeur du module
+  @return ModuleBase Retourne l'instance du module ou null si le module n'a pas pu être charger
+*/  
 public function AddModule($module,$parametre = array())
 {
     if(file_exists("module/".$module.".php"))
@@ -191,21 +285,36 @@ public function AddModule($module,$parametre = array())
     
 }
 
-// Supprime un module a chaud
+/*
+  Supprime un module a chaud
+  @access public
+  @param string $type nom du module
+  @todo remplacer $type par $module
+*/
 public function RemoveModule($type)
 {
     // Penser a vérifie que le parametre est bien un objet et une instance de rendu
     unset($this->modules[$type]);
 }
 
-// Interchange un module a chaud
+/*
+  Interchange un module a chaud
+  @access public
+  @param string $type nom de l'ancien module
+  @param string $module nom du nouveau module
+  @todo remplacer $type par $old_module et $module par $new_module
+*/
 public function SwitchModule($type,$module)
 {
     $this->RemoveModule($type);
     $this->AddModule($type,$module);
 }
   
-/* Importe le css passé en paramètre dans la propriété css */
+/*
+  Importe le css passé en paramètre dans la propriété css
+  @access public
+  @param string $file nom du fichier a charger depuis themes/__nom__theme__/__nom_fichier__
+*/
 public function ImportCss($file)
 {
     $css = new CssParseur();
@@ -214,6 +323,11 @@ public function ImportCss($file)
     unset($t);
 }
 
+/*
+ Envoie des donée brute au client
+ @access public
+ @param $msg message a envoyé
+*/
 public function send($msg){
 	// Ici comme les ressource envoyÃ© sont de type audio et video en multiplexage
 	// On doit typer la ressource elle meme en envoyÃ© les donÃ©e sous format json
@@ -224,6 +338,11 @@ public function send($msg){
 	socket_write($this->instance,$msg,strlen($msg));
 }
 
+/*
+ Permet de simuler un timeout de socket
+ @param Array Tableau de socket
+ @return boolean true si la socket a toujour des donée sinon false
+*/
 public function is_socket($socket)
 {
 	$socks = array($socket);
@@ -236,6 +355,13 @@ public function is_socket($socket)
 	}
 }
 
+/*
+ Permet de recevoir des donée mon non utilisé visiblement ici
+ @access public
+ @param integer Taille de réceptione des donnée par défaut 2048
+ @return boolean retour false ou OK
+ @todo terminé ou supprimé cette méthode
+*/
 public function recv($taille=2048)
 {
 	$chrono=time();
@@ -259,6 +385,10 @@ public function recv($taille=2048)
 	return false;
 }
 
+/*
+ Est appeler par les ticks à interval régulier pour appeler les methode des event recu
+ @access public
+*/
 public function handle_event()
 {
 	$chrono=time();
@@ -275,6 +405,10 @@ public function handle_event()
 	}
 }
 
+/*
+ Est appeler par les ticks à interval régulier pour a stocker les events dans un tableau a traiter plus tard
+ @access public
+*/
 public function handle_recv()
 {
 	$taille = 2048;
@@ -330,6 +464,10 @@ public function handle_recv()
 	}
 }
 
+/*
+ Permet de se deconecter du client
+ @access public
+*/
 public function disconnect(){
 	socket_close($this->instance);
 }
