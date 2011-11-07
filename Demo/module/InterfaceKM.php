@@ -1,49 +1,114 @@
 <?php
 /*
-Module d'interaction utilisateur via périphérique
-Ici la souris
-Ce module est en cours de dévellopement et expérimental
+  Module d'interaction utilisateur via périphérique 
+  Ce module est en cours de dévellopement et expérimental
+  
+  @author Jean pasqualini <jpasqualini@live.fr>
+  @license GPL
+  @version InDev
 */
-// Penser a rajouter le clavier et a changer le nom du module
 class module_InterfaceKM extends ModuleBase implements IModuleBase {
     
+	/*
+	  @access private
+	  @var int $positionX Position de la souris en X
+	*/
 	private $positionX=0;
+	
+	/*
+	 @access private
+	 @var int $positionY Position de la souris en Y
+	*/
 	private $positionY=0;
-	
+		
+	/*
+	 @access private
+	 @var SProxy Proxy d'handler pour la position de la souris
+	*/
 	private $handle_move = null;
-	private $handle_click = null;
-	private $handle_dblclick = null;
 	
+	/*
+	 @access private
+	 @var SProxy Proxy d'handler pour le click de souris
+	*/
+	private $handle_click = null;
+	
+	/*
+	 @access private
+	 @var SProxy Proxy d'handler pour le double click de souris
+	*/
+	private $handle_dblclick = null;
+		
+	/*
+	 @access private
+	 @var SProxy Proxy d'handler pour la pression et relachement d'une double
+	*/	
 	private $handle_keypress = null;
+	
+	/*
+	 @access private
+	 @var SProxy Proxy d'handler pour le relachement d'une touche
+	*/
 	private $handle_keyup = null;
+	
+	/*
+	 @access private
+	 @var SProxy Proxy d'handler pour le relachement d'une touche
+	*/
 	private $handle_keydown = null;
 	
+  /*
+   Recupére le nom du module
+   @access public
+   @return string Le nom du module
+  */
   public function GetModuleName()
   {
     return "InterfaceKM";
   }
 
+  /*
+   Récupere la description du module
+   @access public
+   @return string La description du module
+  */
   public function GetModuleDescription()
   {
       return "Intercept keyboard and mouse";
   }
   
+  /*
+   Récupere la version du module
+   @access public
+   @return string La version du module
+  */
   public function GetVersion()
   {
       return "1.0";
   }
   
+  /*
+   Récupere les dépendances module serveur
+   @access public
+   @return Array Les dépendances serveur
+  */
   public function GetDependanceServer()
   {
     // Declare les modules serveur dont nous avons besoin
     return array();
   }
   
+  /*
+   Récupere les dépendances module client
+   @access public
+   @return Array Les dépendances client
+  */
   public function GetDependanceClient()
   {
     return array(); 
   }
         
+	
     public function SetHandle_mouse($handle_move = null,$handle_click = null,$handle_dblclick = null)
     {    	   	
     	if($handle_move != null) $this->SetHandle_mouse_move($handle_move);

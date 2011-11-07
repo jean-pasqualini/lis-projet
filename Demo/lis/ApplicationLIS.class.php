@@ -1,10 +1,9 @@
 <?php
 /*
+ Clase principale du framework 
  @author Jean pasqualini <jpasqualini75@gmail.com>
  @version InDev
  @license GPL
- Mr pasqualini jean | 28/09/2010 
- Version de lis en expérimentation non stable .
  @todo Négociation de module avec le client à faire
  @todo Implémenter la gestion des erreurs en exception
 */
