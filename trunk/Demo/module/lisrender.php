@@ -1,10 +1,11 @@
 <?php
-/* module de rendu audio LISRENDER */
-// A ajouter implements ViewRender une fois l'interface de spécification du rendu crée
 /*
- Module de rendu lisrendu
- Pasqualini jean | mek-in-gold@live.fr
- Gpl licences
+  Module de rendu lisrendu
+  
+  @todo A ajouter implements IViewRender une fois l'interface de spécification du rendu crée
+  @author Jean pasqualini <jpasqualini@live.fr>
+  @license GPL
+  @version InDev
 */
 Class module_Lisrender extends ModuleBase implements IModuleBase {
   
