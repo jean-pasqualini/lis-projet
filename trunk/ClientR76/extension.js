@@ -122,8 +122,21 @@ return true;
     {
 	    console.log("Ajout du module : " + name);
 	    //eval( $.ajax({ url: "module/"+name+".js",  async: false }).responseText);
-            $.getScript(chrome.extension.getURL("module/" + name + ".js"));
-            module_temp=new window["module_"+name](this.id_app);
+        $.getScript(chrome.extension.getURL("module/" + name + ".js"));
+            /*
+              var headID = document.getElementsByTagName("head")[0];
+			    var newScript = document.createElement('script');
+			    newScript.type = 'text/javascript';
+			    newScript.src = chrome.extension.getURL("module/" + name + ".js");
+			    headID.appendChild(newScript);
+             */
+        
+        var module_temp=new window["module_"+name](this.id_app);
+        if(module_temp == undefined)
+        {
+        	console.log("Le module " + name + " n'a pas pu être initialisé");
+        	return;
+        }
 	    this.module[module_temp.GetName()] = module_temp;
     }
     

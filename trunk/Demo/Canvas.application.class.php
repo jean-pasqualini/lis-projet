@@ -104,7 +104,7 @@ class Canvas extends ApplicationLIS {
     {
 		// D�place la souris
 		$this->souris->MoveTo($positionX,$positionY);
-		
+			
 		// Redessine tous les objets
 		Object::DrawnAllObjects();
     }
