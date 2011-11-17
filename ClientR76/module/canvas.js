@@ -3,7 +3,7 @@
   ...
 */
 
-var module_canvas = $.inherit ({
+var module_canvas = $.inherit (module_base,{
     
     __constructor : function (id_app)
     {

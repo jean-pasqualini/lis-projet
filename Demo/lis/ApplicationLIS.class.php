@@ -4,8 +4,8 @@
  @author Jean pasqualini <jpasqualini75@gmail.com>
  @version InDev
  @license GPL
- @todo Négociation de module avec le client à faire
- @todo Implémenter la gestion des erreurs en exception
+ @todo Nï¿½gociation de module avec le client ï¿½ faire
+ @todo Implï¿½menter la gestion des erreurs en exception
 */
 Abstract Class ApplicationLIS {
     
@@ -25,20 +25,20 @@ Abstract Class ApplicationLIS {
     /*
      @access public
      @static
-     @staticvar Array Contients les instances des modules chargée
+     @staticvar Array Contients les instances des modules chargï¿½e
     */
     public static $modules=array();
     
     /*
      @access private
      @static
-     @staticvar Array Contient les propriété css importer
+     @staticvar Array Contient les propriï¿½tï¿½ css importer
     */
-    private static $css=array(); // Contient les propriété des css importer
+    private static $css=array(); // Contient les propriï¿½tï¿½ des css importer
     
     /*
      @access private
-     @var string Contient le théme courant
+     @var string Contient le thï¿½me courant
     */
     private $theme="default";
     
@@ -56,7 +56,7 @@ Abstract Class ApplicationLIS {
     
     /*
      @access private
-     @var Array Contient les commande évenementiel recu en attente de lecture
+     @var Array Contient les commande ï¿½venementiel recu en attente de lecture
     */
     private $events = array();
     
@@ -77,8 +77,8 @@ Abstract Class ApplicationLIS {
     
     ApplicationLIS::$UniqueInstance = $this;
         
-    global $_CONFIGURATION; // Permet d'acceder de facon global au donnée de configuration déclarer 
-    global $error; // Permer d'accéder de facon globale au tableau d'erreurs $error
+    global $_CONFIGURATION; // Permet d'acceder de facon global au donnï¿½e de configuration dï¿½clarer 
+    global $error; // Permer d'accï¿½der de facon globale au tableau d'erreurs $error
     
     //On importe le css globale de l'application si celui-ci existe
     if(file_exists("theme/".$this->theme."/css/application.css")) { $this->ImportCss("application.css"); }
@@ -86,27 +86,27 @@ Abstract Class ApplicationLIS {
     // IMPORTANT : SUPPRIME LA BARIERE DES 30 SECONDES
     set_time_limit(0);
    
-    // L'envoi implicite signifie que toute fonction qui envoie des données au navigateur verra ses données envoyées immédiatement
+    // L'envoi implicite signifie que toute fonction qui envoie des donnï¿½es au navigateur verra ses donnï¿½es envoyï¿½es immï¿½diatement
     ob_implicit_flush();
     
-    //On crée la socket
+    //On crï¿½e la socket
     if(($socket = socket_create(AF_INET, SOCK_STREAM, 0)) === false)
     {
-	    // Si elle ne se charge pas alors on affiche une erreur indiquant que la socket n'a pas pu être crée
-	    echo 'La création de la socket a échoué : '.socket_strerror($socket)."\n<br />";
+	    // Si elle ne se charge pas alors on affiche une erreur indiquant que la socket n'a pas pu ï¿½tre crï¿½e
+	    echo 'La crï¿½ation de la socket a ï¿½chouï¿½ : '.socket_strerror($socket)."\n<br />";
     }
         
-    //On assigne la socket à une adresse et à un port, que l'on va écouter par la suite.
+    //On assigne la socket ï¿½ une adresse et ï¿½ un port, que l'on va ï¿½couter par la suite.
     if(($assignation = socket_bind($socket, $address, $port)) < 0)
     {
-	    // Si elle ne s'assigne pas alors on affiche une erreur indiquant que l'assignation à échoué
-	    echo "L'assignation de la socket a échoué : ".socket_strerror($assignation)."\n<br />";
+	    // Si elle ne s'assigne pas alors on affiche une erreur indiquant que l'assignation ï¿½ ï¿½chouï¿½
+	    echo "L'assignation de la socket a ï¿½chouï¿½ : ".socket_strerror($assignation)."\n<br />";
     }
         
-    //On prépare l'écoute.
+    //On prï¿½pare l'ï¿½coute.
     if(($ecoute = socket_listen($socket)) === false)
     {
-	    echo "L'écoute de la socket a échoué : ".socket_strerror($ecoute)."\n<br />";
+	    echo "L'ï¿½coute de la socket a ï¿½chouï¿½ : ".socket_strerror($ecoute)."\n<br />";
 	  
 	  // Si le client n'a pas pu se connecter alors...
           if(($client = socket_accept($socket)) === false)
@@ -119,14 +119,14 @@ Abstract Class ApplicationLIS {
             return false;
           }
           
-	  // On strocke la ressource socket cliente dans la propriété $instance
+	  // On strocke la ressource socket cliente dans la propriï¿½tï¿½ $instance
           $this->instance=$client;
               
-          // Ici charge les modules de rendu (négociation client/server a implementer) 
+          // Ici charge les modules de rendu (nï¿½gociation client/server a implementer) 
               
-          // On verifie la configuration des modules principaux pour l'audio et l'affichage et si ceux-ci ne se chargent pas alors on génére une erreur
-          if (!count($_CONFIGURATION['MODULE']['audio'])) {  trigger_error("Module de rendu audio non configurée",E_USER_NOTICE); }
-          if (!count($_CONFIGURATION['MODULE']['view'])) {  trigger_error("Module de rendu view non configurée",E_USER_NOTICE); }
+          // On verifie la configuration des modules principaux pour l'audio et l'affichage et si ceux-ci ne se chargent pas alors on gï¿½nï¿½re une erreur
+          if (!count($_CONFIGURATION['MODULE']['audio'])) {  trigger_error("Module de rendu audio non configurï¿½e",E_USER_NOTICE); }
+          if (!count($_CONFIGURATION['MODULE']['view'])) {  trigger_error("Module de rendu view non configurï¿½e",E_USER_NOTICE); }
     
             // On parcour tous les modules de rendu disponible tout les modules
             foreach($_CONFIGURATION['MODULE'] as $name_module => $liste_rendu)
@@ -141,11 +141,11 @@ Abstract Class ApplicationLIS {
             }
               
             /*
-	      On declare que les handle de reception de traitement évenementiel
-	      seront appelée tous 5 appel d'instruction php (tick)
+	      On declare que les handle de reception de traitement ï¿½venementiel
+	      seront appelï¿½e tous 5 appel d'instruction php (tick)
 	      
 	      Cela permet de faire une sorte de setInterval pour ceux qui connaisse javascript
-	      Cette fonction est désormait depreaced et c'est bien domage
+	      Cette fonction est dï¿½sormait depreaced et c'est bien domage
 	    */
 	    	    
 	    declare(ticks=5);
@@ -163,7 +163,7 @@ Abstract Class ApplicationLIS {
 */
 public static function GetInstance()
 {
-	// Si l'application n'a pas encore été instancie alors...
+	// Si l'application n'a pas encore ï¿½tï¿½ instancie alors...
 	if (ApplicationLIS::$UniqueInstance == null) {
 		/*
 		 On genere une erreur pour dire que l'application n'est pas initialiser
@@ -177,10 +177,10 @@ public static function GetInstance()
 }
 
 /*
- Retourne les propriété css déclaré de l'application
+ Retourne les propriï¿½tï¿½ css dï¿½clarï¿½ de l'application
  @access public
  @static
- @return Array Retourne les propriété css déclaré de l'application
+ @return Array Retourne les propriï¿½tï¿½ css dï¿½clarï¿½ de l'application
 */
 public static function GetCss()
 {
@@ -196,7 +196,7 @@ public static function GetCss()
 */
 public static function GetModule($name_module)
 {
-    // On affiche un message d'information pour dire que le module est demadnée
+    // On affiche un message d'information pour dire que le module est demadnï¿½e
     echo "[INFO] demande du module '".$name_module."'\n";
 	
     // Si le module existe alors
@@ -207,7 +207,7 @@ public static function GetModule($name_module)
     }
     else
     {
-	// Sinon on génére une erreur pour dire que le module requis n'est pas chargée
+	// Sinon on gï¿½nï¿½re une erreur pour dire que le module requis n'est pas chargï¿½e
         trigger_error("[GRAVE] Le module requis (".$name_module.") n'est pas charge actuellement !!!",E_USER_ERROR);
     }
 }
@@ -229,7 +229,7 @@ public static function IssetModule($name_module)
     }
     elseif(!is_object(ApplicationLIS::$modules[$name_module]))
     {
-	// S'il existe masi qu'il n'est pas un objet alors on génére une erreur
+	// S'il existe masi qu'il n'est pas un objet alors on gï¿½nï¿½re une erreur
         echo "\n !!!! ".var_dump(ApplicationLIS::$modules[$name_module])." !!!! \n";
         return false;
     }
@@ -247,9 +247,9 @@ public static function IssetModule($name_module)
  
  Attention diminue forcement les performance globale de l'application
  @access public
- @param string $name Nom de la méthode
- @param Array Liste des paramétre
- @return inconu Retourne false si la méthode n'a pas été trouver sinon retourne le retour de la méthode
+ @param string $name Nom de la mï¿½thode
+ @param Array Liste des paramï¿½tre
+ @return inconu Retourne false si la mï¿½thode n'a pas ï¿½tï¿½ trouver sinon retourne le retour de la mï¿½thode
 */
 public function __call($name,$arguments)
 {
@@ -259,10 +259,10 @@ public function __call($name,$arguments)
       // Si le module est un objet
       if(is_object($value))
       {
-	// et que la methode passé en argument $name existe dans se module
+	// et que la methode passï¿½ en argument $name existe dans se module
         if (method_exists ($value,$name))
         {
-	    // Alors on retourne le retour de l'appel de la méthode du module avec pour paramétre $arguments
+	    // Alors on retourne le retour de l'appel de la mï¿½thode du module avec pour paramï¿½tre $arguments
             return call_user_func_array(array(ApplicationLIS::$modules[$propriete], $name), $arguments);
         }
       }
@@ -274,14 +274,14 @@ public function __call($name,$arguments)
 
 
 /*
-  Ajoute un module à chaud
+  Ajoute un module ï¿½ chaud
   Les modules se trouvent dans le dossier module et
   ont pour nom  '___nommodule___.php' et pour nom de classe 'module__nommodule'
 
   @access public
   @param string $module Nom du module a charger 
-  @param Array $parametre Liste des paramétre à passer au contructeur du module
-  @return ModuleBase Retourne l'instance du module ou null si le module n'a pas pu être charger
+  @param Array $parametre Liste des paramï¿½tre ï¿½ passer au contructeur du module
+  @return ModuleBase Retourne l'instance du module ou null si le module n'a pas pu ï¿½tre charger
 */  
 public function AddModule($module,$parametre = array())
 {
@@ -301,35 +301,35 @@ public function AddModule($module,$parametre = array())
 	// On interoge le module sur ces dependances serveur qui nous renvoie une liste qu'on parcour
         foreach($instance_module->GetDependanceServer() as $dependence_name => $dependence_values)
         {
-	    // ON affiche un message d'information indiquant que la dépendence se charge
+	    // ON affiche un message d'information indiquant que la dï¿½pendence se charge
             echo "[INFO] dependance '".$dependence_name."'\n";
 	    
-	    // Si la dépendence n'existe pas alors...
+	    // Si la dï¿½pendence n'existe pas alors...
             if(!ApplicationLIS::IssetModule($dependence_name))
             {
-		// On génére une erreur
+		// On gï¿½nï¿½re une erreur
                 trigger_error("module ".$module." dependence ".$dependence_name." non satisfaite !",E_USER_NOTICE);
                 return null;
             }
             elseif(ApplicationLIS::GetModule($dependence_name)->GetVersion()!=$dependence_values["Version"])
             {
-		// Si la dépendence existe mais que la version de la dépendance exigée n'est pas celle de la dépendence existance
-		// Alors on génére une erreur
-                trigger_error("module ".$module." dependence ".$dependence_name." non statisfaite pour la version demandée!",E_USER_NOTICE);
+		// Si la dï¿½pendence existe mais que la version de la dï¿½pendance exigï¿½e n'est pas celle de la dï¿½pendence existance
+		// Alors on gï¿½nï¿½re une erreur
+                trigger_error("module ".$module." dependence ".$dependence_name." non statisfaite pour la version demandï¿½e!",E_USER_NOTICE);
                 return null;
             }
         }
         
 	/*
-	 On vérife que le module est bien un module lis
-	 grâce à
+	 On vï¿½rife que le module est bien un module lis
+	 grï¿½ce ï¿½
 	 - la nomenclature du nom de la classe
-	 - L'héritage de la classe ModuleBase
+	 - L'hï¿½ritage de la classe ModuleBase
 	 - L'implementation de l'interface IModuleBase
 	*/
         if(strpos(get_class($instance_module),"module_")===false && $instance_module instanceof IModuleBase && $instance_module instanceof ModuleBase )
         {
-	    // On génere une erreur pour dire que le moduel n'est pas compatible
+	    // On gï¿½nere une erreur pour dire que le moduel n'est pas compatible
             trigger_error("module (".$name_module.") not module compatible !",E_USER_NOTICE);
             return null;
         }
@@ -339,7 +339,7 @@ public function AddModule($module,$parametre = array())
     }
     else
     {
-	// Sinon on génere une erreur pour dire que le module n'est pas disponible
+	// Sinon on gï¿½nere une erreur pour dire que le module n'est pas disponible
         trigger_error("module ".$module." not aviable !",E_USER_NOTICE);
         return null;
     }
@@ -354,7 +354,7 @@ public function AddModule($module,$parametre = array())
 */
 public function RemoveModule($type)
 {
-    // Penser a vérifie que le parametre est bien un objet et une instance de rendu
+    // Penser a vï¿½rifie que le parametre est bien un objet et une instance de rendu
     unset($this->modules[$type]);
 }
 
@@ -375,7 +375,7 @@ public function SwitchModule($type,$module)
 }
   
 /*
-  Importe le css passé en paramètre dans la propriété css
+  Importe le css passï¿½ en paramï¿½tre dans la propriï¿½tï¿½ css
   @access public
   @param string $file nom du fichier a charger depuis themes/__nom__theme__/__nom_fichier__
 */
@@ -388,15 +388,15 @@ public function ImportCss($file)
 }
 
 /*
- Envoie des données json au client
+ Envoie des donnï¿½es json au client
  @access public
- @param Array $msg donnée à envoyée
+ @param Array $msg donnï¿½e ï¿½ envoyï¿½e
 */
 public function send($msg){
 	// Qui se charge de dispatcher les diffÃ©rentes ressource dans ce qu'il recoie
 	//$this->recv_evenementiel();
 	
-	// On envoie les donée au client sous forme json
+	// On envoie les donï¿½e au client sous forme json
 	$msg=json_encode($msg)."\r\n";
 	socket_write($this->instance,$msg,strlen($msg));
 }
@@ -404,7 +404,7 @@ public function send($msg){
 /*
  Permet de simuler un timeout de socket
  @param Socket Ressource de la socket
- @return boolean true si la socket a toujour des donée sinon false
+ @return boolean true si la socket a toujour des donï¿½e sinon false
 */
 public function is_socket($socket)
 {
@@ -423,11 +423,11 @@ public function is_socket($socket)
 }
 
 /*
- Permet de recevoir des donée mon non utilisé visiblement ici
+ Permet de recevoir des donï¿½e mon non utilisï¿½ visiblement ici
  @access public
- @param integer Taille de réceptione des donnée par défaut 2048
+ @param integer Taille de rï¿½ceptione des donnï¿½e par dï¿½faut 2048
  @return boolean retour false ou OK
- @todo terminé ou supprimé cette méthode
+ @todo terminï¿½ ou supprimï¿½ cette mï¿½thode
 */
 public function recv($taille=2048)
 {
@@ -436,10 +436,10 @@ public function recv($taille=2048)
 	 
 	while(1)
 	{
-		// On parcour les donée du tableau de retour $returns
+		// On parcour les donï¿½e du tableau de retour $returns
 		foreach($this->returns as $cle => $return)
 		{
-			// Si l'id du retour est égale a "0"
+			// Si l'id du retour est ï¿½gale a "0"
 			if($return["id"] == 0)
 			{
 				// Alors on retourne ok
@@ -449,8 +449,8 @@ public function recv($taille=2048)
 		}
 		 
 		/*
-		   Si le temp passé depuis le début de l'éxecution de la fonction
-		   Dépasse le temp accordé par thread de la propriété time_thread
+		   Si le temp passï¿½ depuis le dï¿½but de l'ï¿½xecution de la fonction
+		   Dï¿½passe le temp accordï¿½ par thread de la propriï¿½tï¿½ time_thread
 		   Alors on finit la boucle et on affiche un message d'information
 		*/
 		if((time()-$chrono)>$this->time_thread) {
@@ -462,7 +462,7 @@ public function recv($taille=2048)
 }
 
 /*
- Est appeler par les ticks à interval régulier pour appeler les methode des event recu
+ Est appeler par les ticks ï¿½ interval rï¿½gulier pour appeler les methode des event recu
  @access public
 */
 public function handle_event()
@@ -470,7 +470,7 @@ public function handle_event()
     	// On encoregistre le chrono au timestamp
 	$chrono=time();
 	 
-	 // On parcour le tableau des évenement recu
+	 // On parcour le tableau des ï¿½venement recu
 	foreach($this->events as $cle => $event)
 	{
 		$findme = $event;
@@ -478,23 +478,23 @@ public function handle_event()
 		// On supprime l'evenement de ce tableau
 		unset($this->events[$cle]);
 		
-		// On appele l'handle attaché a l'evenement en question
+		// On appele l'handle attachï¿½ a l'evenement en question
 		call_user_func_array(array(ApplicationLIS::GetModule($findme["Module"]), $findme["Method"]),$findme["Params"]);
 		 
 		/*
-		   Si le temp passé depuis le début de l'éxecution de la fonction
-		   Dépasse le temp accordé par thread de la propriété time_thread
+		   Si le temp passï¿½ depuis le dï¿½but de l'ï¿½xecution de la fonction
+		   Dï¿½passe le temp accordï¿½ par thread de la propriï¿½tï¿½ time_thread
 		   Alors on finit la boucle et on affiche un message d'information
 		*/
 		if((time()-$chrono)>$this->time_thread) {
-			// On affiche que le temp autorisé par thread est dépsasé
+			// On affiche que le temp autorisï¿½ par thread est dï¿½psasï¿½
 			echo "Temp thread depasse\n"; break;
 		}
 	}
 }
 
 /*
- Est appeler par les ticks à interval régulier pour a stocker les events dans un tableau a traiter plus tard
+ Est appeler par les ticks ï¿½ interval rï¿½gulier pour a stocker les events dans un tableau a traiter plus tard
  @access public
 */
 public function handle_recv()
@@ -504,28 +504,28 @@ public function handle_recv()
 	// On encoregistre le chrono au timestamp
 	$chrono=time();
 	
-	// On utilise le simulateur de timeout pour savoir quand il n'y a plus de donée à tratier
+	// On utilise le simulateur de timeout pour savoir quand il n'y a plus de donï¿½e ï¿½ tratier
 	while($this->is_socket($this->instance))
 	{
-		// On lit les donée		 
+		// On lit les donï¿½e		 
 		$data=socket_read($this->instance,$taille,PHP_NORMAL_READ);
 		 
 		//echo "Data : ".$data."\n";
 		
-		// On transforme les donée json en tableau
+		// On transforme les donï¿½e json en tableau
 		$data = json_decode($data,true);
 		//echo print_r($data,true);
 		
-		// On analyse la propriété action de ce tableau
+		// On analyse la propriï¿½tï¿½ action de ce tableau
 		switch($data["Action"])
 		{
-			// Si elle est égale a retour
+			// Si elle est ï¿½gale a retour
 			case "Retour":
 				// On stocke le retour dans le tableau des retours
 				$this->returns[] = "OK";
 			break;
 			
-			// Si elle est égale a evenemetn
+			// Si elle est ï¿½gale a evenemetn
 			case "Evenement":
 				if(empty($data["Params"]))
 				{
@@ -533,10 +533,10 @@ public function handle_recv()
 				}
 				// var_dump($data["Params"]);
 				
-				// On stocke l'évenement dans le tableau d'évenement	
+				// On stocke l'ï¿½venement dans le tableau d'ï¿½venement	
 				$this->events[] = $data;
 
-				// On affiche un message d'information indiquant que c'est un évenemtn
+				// On affiche un message d'information indiquant que c'est un ï¿½venemtn
 				echo "C'est un evenement\n";
 			reak;
 			
@@ -550,12 +550,12 @@ public function handle_recv()
 		}
 		 
 		/*
-		   Si le temp passé depuis le début de l'éxecution de la fonction
-		   Dépasse le temp accordé par thread de la propriété time_thread
+		   Si le temp passï¿½ depuis le dï¿½but de l'ï¿½xecution de la fonction
+		   Dï¿½passe le temp accordï¿½ par thread de la propriï¿½tï¿½ time_thread
 		   Alors on finit la boucle et on affiche un message d'information
 		*/
 		if((time()-$chrono)>$this->time_thread) {
-			// On affiche que le temp autorisé par thread est dépsasé
+			// On affiche que le temp autorisï¿½ par thread est dï¿½psasï¿½
 			echo "Temp thread depasse\n"; break;
 		}
 		 

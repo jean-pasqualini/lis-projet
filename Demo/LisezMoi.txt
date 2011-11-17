@@ -1,0 +1,4 @@
+Le fichier principale de l'application canvas est Canvas.php
+La classe principale de l'application canvas est Canvas.application.class.php
+
+Pour lancer le serveur d'application executer le script bash server.sh (java -jar lol.jar)

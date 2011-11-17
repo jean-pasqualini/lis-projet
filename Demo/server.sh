@@ -1,1 +1,1 @@
-java -jar lol.jar
+java -jar Server.jar
