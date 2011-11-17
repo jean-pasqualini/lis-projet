@@ -3,7 +3,7 @@
   ...
 */
 
-var module_lisrender = $.inherit ({
+var module_lisrender = $.inherit (module_base,{
     
     __construction : function ()
     {

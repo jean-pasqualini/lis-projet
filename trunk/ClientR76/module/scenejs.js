@@ -3,7 +3,7 @@
   ...
 */
 
-var module_scenejs = $.inherit ({
+var module_scenejs = $.inherit (module_base,{
     
     __construction : function ()
     {

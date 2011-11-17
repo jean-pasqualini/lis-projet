@@ -3,7 +3,7 @@
   ...
 */
 
-var module_audioapi = $.inherit ({
+var module_audioapi = $.inherit (module_base,{
     
     __construction : function ()
     {
