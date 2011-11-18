@@ -348,13 +348,8 @@ Class Object {
     */
     public function ToStringClasses()
     {
-        $String_classes="";
-	
-	// On list les classes , on les assemble dans une string
-        foreach($this->classes as $classe) { $String_classes.=".".$classe; }
-	
-	// On retourne cette string qui pourra servir pour une séléction d'objet
-        return $String_classes;
+		// On concatène les nom de classes de l'objet dans une string avec '.' comme glue et on retourne cette string qui pourra servir pour une séléction d'objet
+        return ".".implode(".", $this->classes);
     }
     
     /*
