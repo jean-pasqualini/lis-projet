@@ -1,7 +1,17 @@
 /*
   Le module base est un module spécial
   ...
+*
 */
+
+if(typeof jQuery == 'undefined')
+{
+	alert("La librairie jquery n'est pas accèsible");
+}
+else
+{
+	alert("youuupe");
+}
 
 var module_base = $.inherit ({
     
