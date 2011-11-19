@@ -11,6 +11,7 @@ configuration["module"][1]=new Array("canvas");
 //configuration["module"]["audio"]=new Array("audioapi");
 
 
+
 /*
   Extension jquery pour utiliser une nouvelle balise 'application'
   pour appeler le client lis 
