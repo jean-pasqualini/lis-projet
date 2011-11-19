@@ -1,9 +1,10 @@
 <?php
-/*
- Définie les couleur principale primaire via leur decomposition en Red Green Bleu
- @author Jean pasqualini <jpasqualini75@gmail.com>
- @version InDev
- @license GPL
+/**
+ * Définie les couleur principale primaire via leur decomposition en Red Green Bleu
+ * @author Jean pasqualini <jpasqualini75@gmail.com>
+ * @version InDev
+ * @license GPL
+ * @package ConfigurationLis
 */
  
 define("ROUGE","255|0|0");

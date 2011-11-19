@@ -1,74 +1,76 @@
 <?php
-/*
- Interface pour les module de rendu audio
- @author Jean pasqualini <jpasqualini75@gmail.com>
- @license GPL
- @version InDev
+/**
+ * Interface pour les module de rendu audio
+ * @author Jean pasqualini <jpasqualini75@gmail.com>
+ * @license GPL
+ * @version InDev
+ * @package ModuleLis
 */
 Interface AudioRender // Interface audio
 {
-    /*
-     Le contructeur des modules de rendu audio
-     @access public
-     @param Socket $socket Contient une socket de connection
-     @return ModuleBase Retour l'instance du module
+    /**
+     * Le contructeur des modules de rendu audio
+     * @access public
+     * @param Socket $socket Contient une socket de connection
+     * @return ModuleBase Retour l'instance du module
     */
     public function __construct($socket);
     
-    /*
-     Permet de jouer une note donc la fréquence est passé en paramètre
-     @access public
-     @param float $note Fréquence de la note
+    /**
+     * Permet de jouer une note donc la frÃ©quence est passÃ© en paramÃ©tre
+     * @access public
+     * @param float $note FrÃ©quence de la note
     */ 
     public function PlayNote($note);
     
-    /*
-     Permet de stoper le son
-     @access public
+    /**
+     * Permet de stoper le son
+     * @access public
     */
     public function StopNote();
 }
 
-/*
- Interface pour les mods
- @author Jean pasqualini <jpasqualini75@gmail.com>
- @license GPL
- @version InDev
+/**
+ * Interface pour les mods
+ * @author Jean pasqualini <jpasqualini75@gmail.com>
+ * @license GPL
+ * @version InDev
+ * @package ModuleLis
 */
 Interface IModuleBase
 {
-    /*
-      Permet de connaitre le nom du module
-      @access public
-      @return string Retourne le nom du module
+    /**
+      * Permet de connaitre le nom du module
+      * @access public
+      * @return string Retourne le nom du module
     */
     public function GetModuleName();
     
-    /*
-     Permet de connaitre la desription du module
-     @access public
-     @return string Retourne la déscription du module
+    /**
+     * Permet de connaitre la desription du module
+     * @access public
+     * @return string Retourne la dÃ©scription du module
     */
     public function GetModuleDescription();
     
-    /*
-     Permet de récuperer la vercion du module
-     @access public
-     @return string Retourne la version du module
+    /**
+     * Permet de rÃ©cuperer la vercion du module
+     * @access public
+     * @return string Retourne la version du module
     */
     public function GetVersion();
     
-    /*
-     Permet de récuperer les dépendances modules serveur du module
-     @access public
-     @return Array Retourne la liste des modules serveur
+    /**
+     * Permet de rÃ©cuperer les dÃ©pendances modules serveur du module
+     * @access public
+     * @return Array Retourne la liste des modules serveur
     */
     public function GetDependanceServer();
     
-    /*
-     Permer de récuprer les dépendances modules client du module
-     @access public
-     @return Array Retourne la liste des modules client
+    /**
+     * Permer de rÃ©cuprer les dÃ©pendances modules client du module
+     * @access public
+     * @return Array Retourne la liste des modules client
     */
     public function GetDependanceClient();
 }

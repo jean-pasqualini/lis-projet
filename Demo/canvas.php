@@ -1,10 +1,11 @@
 <?php
-/*
-  Script principale de l'application canvas
-  C'est lui qui instancie la classe principale de l'application
-  @author Jean pasqualini <jpasqualini75@gmail.com>
-  @version InDev
-  @license GPL
+/**
+  * Script principale de l'application canvas
+  * C'est lui qui instancie la classe principale de l'application
+  * @author Jean pasqualini <jpasqualini75@gmail.com>
+  * @version InDev
+  * @license GPL
+  * @package Canvas
 */
 
 // Inclu le script d'inclusion du framework 'LIS' et ses dépendances
