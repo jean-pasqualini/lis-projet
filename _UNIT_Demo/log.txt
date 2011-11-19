@@ -1,0 +1,75 @@
+19/11/11 02:32:29: [2] 
+Missing argument 1 for Canvas::__construct(), called in /home/john/www/Application LIS/_UNIT_Demo/_UNIT_Canvas.application.class.php on line 12 and defined
+  Erreur sur la ligne 36 dans le fichier /home/john/www/Application LIS/Demo/Canvas.application.class.php, PHP 5.3.2-1ubuntu4.10 (Linux)
+19/11/11 02:32:29: [2] 
+Missing argument 2 for Canvas::__construct(), called in /home/john/www/Application LIS/_UNIT_Demo/_UNIT_Canvas.application.class.php on line 12 and defined
+  Erreur sur la ligne 36 dans le fichier /home/john/www/Application LIS/Demo/Canvas.application.class.php, PHP 5.3.2-1ubuntu4.10 (Linux)
+19/11/11 02:32:29: [8] 
+Undefined variable: address
+  Erreur sur la ligne 39 dans le fichier /home/john/www/Application LIS/Demo/Canvas.application.class.php, PHP 5.3.2-1ubuntu4.10 (Linux)
+19/11/11 02:32:29: [8] 
+Undefined variable: port
+  Erreur sur la ligne 39 dans le fichier /home/john/www/Application LIS/Demo/Canvas.application.class.php, PHP 5.3.2-1ubuntu4.10 (Linux)
+19/11/11 02:32:29: [2] 
+socket_bind(): Host lookup failed [-10001]: Unknown host
+  Erreur sur la ligne 101 dans le fichier /home/john/www/Application LIS/Demo/lis/ApplicationLIS.class.php, PHP 5.3.2-1ubuntu4.10 (Linux)
+19/11/11 02:32:29: [1024] 
+module InterfaceKM not aviable !
+  Erreur sur la ligne 343 dans le fichier /home/john/www/Application LIS/Demo/lis/ApplicationLIS.class.php, PHP 5.3.2-1ubuntu4.10 (Linux)
+19/11/11 02:32:29: [1024] 
+module ModuleClientProxy not aviable !
+  Erreur sur la ligne 343 dans le fichier /home/john/www/Application LIS/Demo/lis/ApplicationLIS.class.php, PHP 5.3.2-1ubuntu4.10 (Linux)
+19/11/11 02:32:29: [1024] 
+module CanvasObject not aviable !
+  Erreur sur la ligne 343 dans le fichier /home/john/www/Application LIS/Demo/lis/ApplicationLIS.class.php, PHP 5.3.2-1ubuntu4.10 (Linux)
+19/11/11 02:32:29: [1024] 
+module UserInterface not aviable !
+  Erreur sur la ligne 343 dans le fichier /home/john/www/Application LIS/Demo/lis/ApplicationLIS.class.php, PHP 5.3.2-1ubuntu4.10 (Linux)
+19/11/11 02:32:29: [1024] 
+[ERREUR] Objet (ROND) non trouver par getobjet!!!!
+  Erreur sur la ligne 241 dans le fichier /home/john/www/Application LIS/Demo/lis/Object.class.php, PHP 5.3.2-1ubuntu4.10 (Linux)
+19/11/11 02:49:11: [1024] 
+module InterfaceKM not aviable !
+  Erreur sur la ligne 343 dans le fichier /home/john/www/Application LIS/Demo/lis/ApplicationLIS.class.php, PHP 5.3.2-1ubuntu4.10 (Linux)
+19/11/11 02:49:11: [1024] 
+module ModuleClientProxy not aviable !
+  Erreur sur la ligne 343 dans le fichier /home/john/www/Application LIS/Demo/lis/ApplicationLIS.class.php, PHP 5.3.2-1ubuntu4.10 (Linux)
+19/11/11 02:49:11: [1024] 
+module CanvasObject not aviable !
+  Erreur sur la ligne 343 dans le fichier /home/john/www/Application LIS/Demo/lis/ApplicationLIS.class.php, PHP 5.3.2-1ubuntu4.10 (Linux)
+19/11/11 02:49:11: [1024] 
+module UserInterface not aviable !
+  Erreur sur la ligne 343 dans le fichier /home/john/www/Application LIS/Demo/lis/ApplicationLIS.class.php, PHP 5.3.2-1ubuntu4.10 (Linux)
+19/11/11 02:49:11: [1024] 
+[ERREUR] Objet (ROND) non trouver par getobjet!!!!
+  Erreur sur la ligne 241 dans le fichier /home/john/www/Application LIS/Demo/lis/Object.class.php, PHP 5.3.2-1ubuntu4.10 (Linux)
+19/11/11 02:51:13: [1024] 
+module InterfaceKM not aviable !
+  Erreur sur la ligne 343 dans le fichier /home/john/www/Application LIS/Demo/lis/ApplicationLIS.class.php, PHP 5.3.2-1ubuntu4.10 (Linux)
+19/11/11 02:51:13: [1024] 
+module ModuleClientProxy not aviable !
+  Erreur sur la ligne 343 dans le fichier /home/john/www/Application LIS/Demo/lis/ApplicationLIS.class.php, PHP 5.3.2-1ubuntu4.10 (Linux)
+19/11/11 02:51:13: [1024] 
+module CanvasObject not aviable !
+  Erreur sur la ligne 343 dans le fichier /home/john/www/Application LIS/Demo/lis/ApplicationLIS.class.php, PHP 5.3.2-1ubuntu4.10 (Linux)
+19/11/11 02:51:13: [1024] 
+module UserInterface not aviable !
+  Erreur sur la ligne 343 dans le fichier /home/john/www/Application LIS/Demo/lis/ApplicationLIS.class.php, PHP 5.3.2-1ubuntu4.10 (Linux)
+19/11/11 02:51:13: [1024] 
+[ERREUR] Objet (ROND) non trouver par getobjet!!!!
+  Erreur sur la ligne 241 dans le fichier /home/john/www/Application LIS/Demo/lis/Object.class.php, PHP 5.3.2-1ubuntu4.10 (Linux)
+19/11/11 02:51:18: [1024] 
+module InterfaceKM not aviable !
+  Erreur sur la ligne 343 dans le fichier /home/john/www/Application LIS/Demo/lis/ApplicationLIS.class.php, PHP 5.3.2-1ubuntu4.10 (Linux)
+19/11/11 02:51:18: [1024] 
+module ModuleClientProxy not aviable !
+  Erreur sur la ligne 343 dans le fichier /home/john/www/Application LIS/Demo/lis/ApplicationLIS.class.php, PHP 5.3.2-1ubuntu4.10 (Linux)
+19/11/11 02:51:18: [1024] 
+module CanvasObject not aviable !
+  Erreur sur la ligne 343 dans le fichier /home/john/www/Application LIS/Demo/lis/ApplicationLIS.class.php, PHP 5.3.2-1ubuntu4.10 (Linux)
+19/11/11 02:51:18: [1024] 
+module UserInterface not aviable !
+  Erreur sur la ligne 343 dans le fichier /home/john/www/Application LIS/Demo/lis/ApplicationLIS.class.php, PHP 5.3.2-1ubuntu4.10 (Linux)
+19/11/11 02:51:18: [1024] 
+[ERREUR] Objet (ROND) non trouver par getobjet!!!!
+  Erreur sur la ligne 241 dans le fichier /home/john/www/Application LIS/Demo/lis/Object.class.php, PHP 5.3.2-1ubuntu4.10 (Linux)
