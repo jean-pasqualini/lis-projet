@@ -1,96 +1,96 @@
 <?php
-/*
-  Module d'interaction utilisateur via pÈriphÈrique 
-  Ce module est en cours de dÈvellopement et expÈrimental
-  
-  @author Jean pasqualini <jpasqualini@live.fr>
-  @license GPL
-  @version InDev
+/**
+  * Module d'interaction utilisateur via p√©riph√©rique 
+  * Ce module est en cours de d√©vellopement et exp√©rimental
+  * @author Jean pasqualini <jpasqualini75@gmail.com>
+  * @license GPL
+  * @version InDev
+  * @package ModuleLis
 */
 class module_InterfaceKM extends ModuleBase implements IModuleBase {
     
-	/*
-	  @access private
-	  @var int $positionX Position de la souris en X
+	/**
+	  * @access private
+	  * @var int $positionX Position de la souris en X
 	*/
 	private $positionX=0;
 	
-	/*
-	 @access private
-	 @var int $positionY Position de la souris en Y
+	/**
+	 * @access private
+	 * @var int $positionY Position de la souris en Y
 	*/
 	private $positionY=0;
 		
-	/*
-	 @access private
-	 @var SProxy Proxy d'handler pour la position de la souris
+	/**
+	 * @access private
+	 * @var SProxy Proxy d'handler pour la position de la souris
 	*/
 	private $handle_move = null;
 	
-	/*
-	 @access private
-	 @var SProxy Proxy d'handler pour le click de souris
+	/**
+	 * @access private
+	 * @var SProxy Proxy d'handler pour le click de souris
 	*/
 	private $handle_click = null;
 	
-	/*
-	 @access private
-	 @var SProxy Proxy d'handler pour le double click de souris
+	/**
+	 * @access private
+	 * @var SProxy Proxy d'handler pour le double click de souris
 	*/
 	private $handle_dblclick = null;
 		
-	/*
-	 @access private
-	 @var SProxy Proxy d'handler pour la pression et relachement d'une double
+	/**
+	 * @access private
+	 * @var SProxy Proxy d'handler pour la pression et relachement d'une double
 	*/	
 	private $handle_keypress = null;
 	
-	/*
-	 @access private
-	 @var SProxy Proxy d'handler pour le relachement d'une touche
+	/**
+	 * @access private
+	 * @var SProxy Proxy d'handler pour le relachement d'une touche
 	*/
 	private $handle_keyup = null;
 	
-	/*
-	 @access private
-	 @var SProxy Proxy d'handler pour le relachement d'une touche
+	/**
+	 * @access private
+	 * @var SProxy Proxy d'handler pour le relachement d'une touche
 	*/
 	private $handle_keydown = null;
 	
-  /*
-   RecupÈre le nom du module
-   @access public
-   @return string Le nom du module
+  /**
+   * Recup√©re le nom du module
+   * @access public
+   * @return string Le nom du module
   */
   public function GetModuleName()
   {
     return "InterfaceKM";
   }
 
-  /*
-   RÈcupere la description du module
-   @access public
-   @return string La description du module
+  /**
+   * R√©cupere la description du module
+   * @access public
+   * @return string La description du module
   */
   public function GetModuleDescription()
   {
       return "Intercept keyboard and mouse";
   }
   
-  /*
-   RÈcupere la version du module
-   @access public
-   @return string La version du module
+  /**
+   * R√©cupere la version du module
+   * @access public
+   * @return string La version du module
   */
   public function GetVersion()
   {
       return "1.0";
   }
   
-  /*
-   RÈcupere les dÈpendances module serveur
-   @access public
-   @return Array Les dÈpendances serveur
+  /**
+   * R√©cupere les d√©pendances module serveur
+   * @access public
+   * @return Array Les d√©pendances serveur
   */
   public function GetDependanceServer()
   {
@@ -98,10 +98,10 @@ class module_InterfaceKM extends ModuleBase implements IModuleBase {
     return array();
   }
   
-  /*
-   RÈcupere les dÈpendances module client
-   @access public
-   @return Array Les dÈpendances client
+  /**
+   * R√©cupere les d√©pendances module client
+   * @access public
+   * @return Array Les d√©pendances client
   */
   public function GetDependanceClient()
   {
@@ -174,7 +174,7 @@ class module_InterfaceKM extends ModuleBase implements IModuleBase {
             $data = socket_read($this->socket,2048,PHP_NORMAL_READ);
             //echo "retour : ".$data."\n";
             $data = json_decode($data,true);
-            // On verifie que les donÈe recue sont bien du type objet
+            // On verifie que les don√©e recue sont bien du type objet
             if(is_array($data) && isset($data["X"]) && isset($data["Y"]))
             {
                 $this->positionX=$data["X"];

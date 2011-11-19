@@ -1,38 +1,39 @@
 <?php
-/*
- Classe qui contient les feuille des styles
- @author Jean pasqualini <jpasqualini75@gmail.com>
- @version InDev
- @license GPL
+/**
+ * Classe qui contient les feuille des styles
+ * @author Jean pasqualini <jpasqualini75@gmail.com>
+ * @version InDev
+ * @license GPL
+ * @package FrameworkLis
 */
 Class FeuilleDeStyle {
 	
-	/*
-	 @access private
-	 @static
-	 @staticvar string Contient le nom du theme actuelle par défaut 'Défault'
+	/**
+	 * @access private
+	 * @static
+	 * @staticvar string Contient le nom du theme actuelle par défaut 'Défault'
 	*/
 	private static $theme = "Default";
 	
-	/*
-	 @access private
-	 @static
-	 @staticvar Array Toutes les définitions css de la feuille de style
+	/**
+	 * @access private
+	 * @static
+	 * @staticvar Array Toutes les définitions css de la feuille de style
 	*/
 	private static $DefinitionsCss = array();
 	
-	/*
-	  @access private
-	  @static
-	  @staticvar string Dossier ou sont stocké les thèmes par défaut 'themes/'
+	/**
+	  * @access private
+	  * @static
+	  * @staticvar string Dossier ou sont stocké les thèmes par défaut 'themes/'
 	*/
 	private static $Folder = "theme/";
 	
-	/*
-	 Configure le thème actuelle
-	 @access public
-	 @static
-	 @param string $theme Nom du thème
+	/**
+	 * Configure le thème actuelle
+	 * @access public
+	 * @static
+	 * @param string $theme Nom du thème
 	*/
 	public static function SetTheme($theme)
 	{
@@ -41,58 +42,58 @@ Class FeuilleDeStyle {
 		foreach(FeuilleDeStyle::$DefinitionsCss as $File) FeuilleDeStyle::AddFile($file);
 	}
 	
-	/*
-	 Recupere le chemin d'accès d'une feuille de style
-	 @static
-	 @access public
-	 @param string $file Nom de la feuille de style
-	 @return string Retourne le chemin de la feuille de style
+	/**
+	 * Recupere le chemin d'accès d'une feuille de style
+	 * @static
+	 * @access public
+	 * @param string $file Nom de la feuille de style
+	 * @return string Retourne le chemin de la feuille de style
 	*/
 	public static function GetLinkFile($file)
 	{
 		return FeuilleDeStyle::$Folder.FeuilleDeStyle::$theme."/css/".$file.".css";
 	}
 	
-	/*
-	 Ajoute une feuille de style
-	 @static
-	 @access public
-	 @param string $file Nom de la feuille de style
+	/**
+	 * Ajoute une feuille de style
+	 * @static
+	 * @access public
+	 * @param string $file Nom de la feuille de style
 	*/
 	public static function AddFile($file)
 	{
 		$this->DefinitionsCss[$file] = CssParseur::GetInstance() -> Parse(FeuilleDeStyle::GetLinkFile($file));
 	}
 	
-	/*
-	  Supprime une feuille de style
-	  @static
-	  @access public
-	  @param string $file Nom de la feuille de style
+	/**
+	  * Supprime une feuille de style
+	  * @static
+	  * @access public
+	  * @param string $file Nom de la feuille de style
 	*/
 	public static function RemoveFile($file)
 	{
 		unset($this->DefinitionsCss[$file]);
 	}
 	
-	/*
-	  Remplace une feuille de style
-	  @static
-	  @access public
-	  @param string $ancien Nom de l'ancienne feuille de style
-	  @param string $nouveau Nom de la nouvelle feuille de style
+	/**
+	  * Remplace une feuille de style
+	  * @static
+	  * @access public
+	  * @param string $ancien Nom de l'ancienne feuille de style
+	  * @param string $nouveau Nom de la nouvelle feuille de style
 	*/
 	public static function SwitchFile($ancien,$nouveau)
 	{
 		$this->DefinitionsCss[$ancien] = $nouveau;
 	}
 	
-    /*
-     Selection les style depuis un objet
-     @access public
-     @static
-     @param Object $objet Instance de l'objet
-     @return Array Retourne les propriété css de l'objet
+    /**
+     * Selection les style depuis un objet
+     * @access public
+     * @static
+     * @param Object $objet Instance de l'objet
+     * @return Array Retourne les propriété css de l'objet
     */
     public static function SFromObject($objet)
     {

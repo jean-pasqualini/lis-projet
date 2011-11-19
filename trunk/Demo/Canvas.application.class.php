@@ -1,36 +1,37 @@
 <?php
-/*
- Classe principale de l'application 'canvas'
- @author Jean pasqualini <jpasqualini75@gmail.com>
- @version InDev
- @license GPL
+/**
+ * Classe principale de l'application 'canvas'
+ * @author Jean pasqualini <jpasqualini75@gmail.com>
+ * @version InDev
+ * @license GPL
+ * @package Canvas
 */
 class Canvas extends ApplicationLIS {
     
-    /*
-     @access private
-     @var integer D�fini le temp limite d'�x�cution de la D�monstration
+    /**
+     * @access private
+     * @var integer Défini le temp limite d'éxécution de la Démonstration
     */
     private $temp_limite;
     
-    /*
-     @access private
-     @var string Contient un texte qui sera afficher
+    /**
+     * @access private
+     * @var string Contient un texte qui sera afficher
     */
     private $text;
     
-    /*
-     @access private
-     @var Object Contient la souris sous forme d'objet afficher a l'�cran
+    /**
+     * @access private
+     * @var Object Contient la souris sous forme d'objet afficher a l'écran
     */
     private $souris;
         
-    /*
-     Le contructeur de l'application canvas
-     @access public
-     @param string $address L'adresse d'�coute pour l'application d� pr�f�rence 127.0.0.1
-     @param integer $port Le port d'�coute de l'application
-     @return Canvas Retourne l'instance de l'application 'Canvas'
+    /**
+     * Le contructeur de l'application canvas
+     * @access public
+     * @param string $address L'adresse d'écoute pour l'application dé préférence 127.0.0.1
+     * @param integer $port Le port d'écoute de l'application
+     * @return Canvas Retourne l'instance de l'application 'Canvas'
     */
     public function __construct ($address,$port)
     {
@@ -43,7 +44,7 @@ class Canvas extends ApplicationLIS {
 		// Ajout du Module ClientProxy (inutile ici)
 		$this->AddModule("ModuleClientProxy");
 		
-		// D�finit pour handle de position de la souris un objet de type EventProxy qui contient ici une fonction anonyme
+		// Définit pour handle de position de la souris un objet de type EventProxy qui contient ici une fonction anonyme
 		$this->SetHandle_mouse_move(new EventProxy(function($x,$y)
 		{
 			echo "La souris a bouger a ".$x.",".$y;
@@ -52,7 +53,7 @@ class Canvas extends ApplicationLIS {
 		// Ajout du module 'CanvasObject' pour la gestion des canvas en objet 
 		$this->AddModule("CanvasObject");
 		
-		// Ajout du module 'UserInterface' pour la cr�ation d'interface utilisateur
+		// Ajout du module 'UserInterface' pour la création d'interface utilisateur
 		$this->AddModule("UserInterface");
 			
 		// Cree un objet de type 'ROND' qui sera la souris
@@ -61,7 +62,7 @@ class Canvas extends ApplicationLIS {
 		// Cree un rectangle de 150x150 avec pour classe max
 		$Rectangle1=Object::GetObject("RECTANGLE")->AddObject()->Set(0,0,150,150)->addClass("max");
 		
-		// Ordonne de dessiner tous les ojbet pr�c�dament cr�e sur la sortie de l'application
+		// Ordonne de dessiner tous les ojbet précédament crée sur la sortie de l'application
 		Object::DrawnAllObjects();
 		
 		while(1)
@@ -71,17 +72,17 @@ class Canvas extends ApplicationLIS {
 	
     }
     
-    /*
-     Keypress � �t� enregistrer en tant que handle pour recevoir les entr�e clavier de l'utilisateur
-     @access public
-     @param string @ascii_code La lettre tap� par l'utilisateur
+    /**
+     * Keypress é été enregistrer en tant que handle pour recevoir les entrée clavier de l'utilisateur
+     * @access public
+     * @param string * @ascii_code La lettre tapé par l'utilisateur
     */
     public function KeyPress($ascii_code)
     {
-		// Recupere la listes des application lanc�e;
+		// Recupere la listes des application lancée;
 		$data = ApiManageLis::GetApps();
 		
-		// D�clare un objet de type texte pour position 80x80
+		// Déclare un objet de type texte pour position 80x80
 		$texte = Object::GetObject("TEXTE")->AddObject()->Set(80,80);
 		
 		// Affiche le nombre d'application lancer
@@ -94,35 +95,35 @@ class Canvas extends ApplicationLIS {
 		}
     }
     
-    /*
-      MouseMove � �t� enregister en tant que handle pour recevoir les changements de position de la souris
-      @access public
-      @param integer $positionX La position en X de la souris
-      @param integer $positionY La position en Y de la souris
+    /**
+      * MouseMove é été enregister en tant que handle pour recevoir les changements de position de la souris
+      * @access public
+      * @param integer $positionX La position en X de la souris
+      * @param integer $positionY La position en Y de la souris
     */
     public function MouseMove($positionX,$positionY)
     {
-		// D�place la souris
+		// Déplace la souris
 		$this->souris->MoveTo($positionX,$positionY);
 			
 		// Redessine tous les objets
 		Object::DrawnAllObjects();
     }
 
-    /*
-      MouseCLick � �t� enregistrer en tant que handle pour recevoir les click de la souris
-      @access public
-      @param integer $x La position en X de la souris
-      @param integer $y La position en Y de la souris
+    /**
+      * MouseCLick é été enregistrer en tant que handle pour recevoir les click de la souris
+      * @access public
+      * @param integer $x La position en X de la souris
+      * @param integer $y La position en Y de la souris
     */
     public function MouseClick($x,$y)
     {
-	/*
-	 @todo Utilise encore le module de bas niveau 'Canvas'
+	/**
+	 * @todo Utilise encore le module de bas niveau 'Canvas'
 	       Utiliser le module de haut niveau 'CanvasObject'
 	*/
 	
-		// D�fini la couleur de remplisage du canvas 
+		// Défini la couleur de remplisage du canvas 
 		$this->FillStyle("blue");
 		
 		// Ecrit un texte a la position 50x50
@@ -138,12 +139,11 @@ class Canvas extends ApplicationLIS {
 		ApiManageLis::SendMsgToApps("yeeeeh");
     }
     
-    /*
-     Quitte l'application
-     
-     @access public
-     @param integer $x La position en X de la souris
-     @param integer $y La position en Y de la souris
+    /**
+     * Quitte l'application
+     * @access public
+     * @param integer $x La position en X de la souris
+     * @param integer $y La position en Y de la souris
     */
     public function quitter($x,$y)
     {
@@ -155,39 +155,40 @@ class Canvas extends ApplicationLIS {
 }
 
 
-/*
-  Api de gestion du serveur d'application depuis l'application
-  @author Jean Pasqualini <jpasqualini75@gmail.com>
-  @version InDev
-  @license GPL
+/**
+  * Api de gestion du serveur d'application depuis l'application
+  * @author Jean Pasqualini <jpasqualini75@gmail.com>
+  * @version InDev
+  * @license GPL
 */
 Class ApiManageLis {
     
-    /*
-     Cette fonction retour la listes des application lanc� sur le serveur d'application
-     @access public
-     @static
-     @return Array La liste des applications lanc�e sur le serveur d'application
+    /**
+     * Cette fonction retour la listes des application lancé sur le serveur d'application
+     * @access public
+     * @static
+     * @return Array La liste des applications lancée sur le serveur d'application
     */
     public static function GetApps()
     {
 		return json_decode(file_get_contents("http://127.0.0.1:3809/GetApps.json"),true);
     }
     
-    /*
-     Cette fonction ordonne l'arret du serveur d'application
-     @access public
-     @static
+    /**
+     * Cette fonction ordonne l'arret du serveur d'application
+     * @access public
+     * @static
     */
     public static function Shutdown()
     {
 		file_get_contents("http://127.0.0.1:3809/Shutdown.json");
     }
     
-    /*
-     Cette fonction envoie un message a tous les utilisateur connect� au serveur d'application
-     @access public
-     @static
+    /**
+     * Cette fonction envoie un message a tous les utilisateur connecté au serveur d'application
+     * @access public
+     * @static
+	 * @package Canvas
     */
     public static function SendMsgToApps($texte)
     {

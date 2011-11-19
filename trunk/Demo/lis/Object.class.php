@@ -1,125 +1,126 @@
 <?php
-/*
- Classe Regroupant les objet 2D et 3D
- Elle permet de gerer des element graphique en tant qu'objet
- Elle est notament utiliser Par CanvasObject
- @author Jean pasqualini <jpasqualini75@gmail.com>
- @license GPL
- @version InDev
+/**
+ * Classe Regroupant les objet 2D et 3D
+ * Elle permet de gerer des element graphique en tant qu'objet
+ * Elle est notament utiliser Par CanvasObject
+ * @author Jean pasqualini <jpasqualini75@gmail.com>
+ * @license GPL
+ * @version InDev
+ * @package FrameworkLis
 */
 Class Object {
     
-    /*
-     @access public
-     @var EventProxy Contient les handles pour l'event de position de la position de l'objet
+    /**
+     * @access public
+     * @var EventProxy Contient les handles pour l'event de position de la position de l'objet
     */
     public $HandleMouseMove = null;
     
-    /*
-     @access public
-     @var EventProxy Contient les handles pour l'event de simple clic sur l'objet
+    /**
+     * @access public
+     * @var EventProxy Contient les handles pour l'event de simple clic sur l'objet
     */
     public $HandleMouseClick = null;
     
-    /*
-     @access public
-     @var EventProxy Contient les handles pour l'event de double click sur l'objet
+    /**
+     * @access public
+     * @var EventProxy Contient les handles pour l'event de double click sur l'objet
     */
     public $HandleMouseDblClick = null;
     
-    /*
-     @access public
-     @var Array $childrens Liste des enfants de l'objet
+    /**
+     * @access public
+     * @var Array $childrens Liste des enfants de l'objet
     */
     public $childrens = array();
     
-    /*
-     @access public
-     @var Array $ListObjects Liste de tous les objets instanciée quelque soit leurs types
+    /**
+     * @access public
+     * @var Array $ListObjects Liste de tous les objets instanciée quelque soit leurs types
     */
     public static $ListObjects=array();
     
 
     // Propriétés de l'ojbet
     
-    /*
-      @access protected
-      @var Object2D Parent de l'objet
+    /**
+      * @access protected
+      * @var Object2D Parent de l'objet
     */
     protected $parent=null;
     
-    /*
-     @access protected
-     @var integer Id de l'objet
+    /**
+     * @access protected
+     * @var integer Id de l'objet
     */
     protected $id;
     
-    /*
-     @access protected
-     @var Array Classss de l'élément
+    /**
+     * @access protected
+     * @var Array Classss de l'élément
     */
     protected $classes=array();
     
-    /*
-     @access protected
-     @var string Position Absolute, Fixed ou Relative de l'élément
+    /**
+     * @access protected
+     * @var string Position Absolute, Fixed ou Relative de l'élément
     */
     protected $Position = "Fixed";
     
-    /*
-     @access protected
-     @var integer Postion en X de l'élément
+    /**
+     * @access protected
+     * @var integer Postion en X de l'élément
     */
     protected $PositionX=0;
     
-    /*
-      @access protected
-      @var integer Position en Y de l'élément
+    /**
+      * @access protected
+      * @var integer Position en Y de l'élément
     */
     protected $PositionY=0;
     
-    /*
-     @access protect
-     @var integer Hauteur de l'élément
+    /**
+     * @access protect
+     * @var integer Hauteur de l'élément
     */
     protected $Height=5;
     
-    /*
-     @access protected
-     @var int Largeur de l'élément
+    /**
+     * @access protected
+     * @var int Largeur de l'élément
     */
     protected $Width=5;
     
-    /*
-     @access protected
-     @var ApplicationLIS Instance de l'application
+    /**
+     * @access protected
+     * @var ApplicationLIS Instance de l'application
     */
     protected $handle_application;
     
-    /*
-     @access protected
-     @static
-     @staticvar Array Liste des types d'éléments
+    /**
+     * @access protected
+     * @static
+     * @staticvar Array Liste des types d'éléments
     */
     protected static $Register_object=array();
     
-    /*
-     @access protected
-     @var boolean Défini si l'élement a été mis a jour.
+    /**
+     * @access protected
+     * @var boolean Défini si l'élement a été mis a jour.
      Si l'élément à été mis a jour il vaudra true et il sera redessiner l'ors du prochain passage de Ojbect::DrawnAllObjects()
     */
     protected $Updated=true;
     
-    /*
-     @access private
-     @static
-     @staticvar int Contient le timestamp de la dernière fois ou l'objet a été déssiné
+    /**
+     * @access private
+     * @static
+     * @staticvar int Contient le timestamp de la dernière fois ou l'objet a été déssiné
     */
     private static $LastDrawnTime=0;
     
-    /*
-     @access protected
-     @var Array Contient les propriété des bordure dont la taille(widht), couleur(Color), type(Type) pour le haut(Top), bas(Bottom), gauche(Left), droit(Right)
+    /**
+     * @access protected
+     * @var Array Contient les propriété des bordure dont la taille(widht), couleur(Color), type(Type) pour le haut(Top), bas(Bottom), gauche(Left), droit(Right)
     */
     protected $Border=array("Left" => array("Widht" => 0 , "Color" => "" , "Type" => 1),
                             "Right" => array("Widht" => 0 , "Color" => "" , "Type" => 1),
@@ -127,9 +128,9 @@ Class Object {
                             "Bottom" => array("Widht" => 0 , "Color" => "" , "Type" => 1)
                            );
 
-    /*
-     @access protected
-     @var Array Contient les propriété des marges éxterieure dont la taille(widht), couleur(Color), type(Type) pour le haut(Top), bas(Bottom), gauche(Left), droit(Right)
+    /**
+     * @access protected
+     * @var Array Contient les propriété des marges éxterieure dont la taille(widht), couleur(Color), type(Type) pour le haut(Top), bas(Bottom), gauche(Left), droit(Right)
     */
     protected $Margin=array("Left" => array("Widht" => 0),
                             "Right" => array("Widht" => 0),
@@ -137,9 +138,9 @@ Class Object {
                             "Bottom" => array("Widht" => 0)
                            );
     
-    /*
-     @access protected
-     @var Array Contient les propriété des marges intérieure dont la taille(widht) pour le haut(Top), bas(Bottom), gauche(Left), droit(Right)
+    /**
+     * @access protected
+     * @var Array Contient les propriété des marges intérieure dont la taille(widht) pour le haut(Top), bas(Bottom), gauche(Left), droit(Right)
     */
     protected $Padding=array("Left" => array("Widht" => 0),
                              "Right" => array("Widht" => 0),
@@ -147,19 +148,19 @@ Class Object {
                              "Bottom" => array("Widht" => 0)
                            );
     
-    /*
-     @access protected
-     @var string Fond de l'objet en couleur html
+    /**
+     * @access protected
+     * @var string Fond de l'objet en couleur html
     */
     protected $Background="white";
     
     
     
-    /*
-     Enregistrer un nouveau type d'objet
-     @access public
-     @param Object Instance du nouveau Type d'objet
-     @return Object Retour l'instance de l'objet
+    /**
+     * Enregistrer un nouveau type d'objet
+     * @access public
+     * @param Object Instance du nouveau Type d'objet
+     * @return Object Retour l'instance de l'objet
     */
     public static function RegisterObject($object)
     {
@@ -167,11 +168,11 @@ Class Object {
         return $object;
     }
     
-    /*
-     @access public
-     Informe que l'objet à été mis à jour
-     @param boolean $bool définir true si l'objet à été mis a jour sinon false
-     @param boolean $recursive Definir true si les objet doivent eu aussi être mis à jour sinon false
+    /**
+     * @access public
+     * Informe que l'objet à été mis à jour
+     * @param boolean $bool définir true si l'objet à été mis a jour sinon false
+     * @param boolean $recursive Definir true si les objet doivent eu aussi être mis à jour sinon false
     */
     public function SetUpdated($bool,$recursive = true)
     {
@@ -189,10 +190,10 @@ Class Object {
         $this->Updated=$bool;
     }
     
-    /*
-      @access public 
-      Retourne true si l'objet à été mis à jour sinon false
-      @return boolean Retourni true si l'objet à été mis à jour sinon false
+    /**
+      * @access public 
+      * Retourne true si l'objet à été mis à jour sinon false
+      * @return boolean Retourni true si l'objet à été mis à jour sinon false
     */
     public function GetUpdated()
     {
@@ -200,12 +201,12 @@ Class Object {
     }
     
     
-    /*
-     Instancie un objet
-     @access public
-     @param Object $parent Parent de l'objet
-     @param string $name Nom de l'objet
-     @return Object Retour l'instance de l'objet instancier
+    /**
+     * Instancie un objet
+     * @access public
+     * @param Object $parent Parent de l'objet
+     * @param string $name Nom de l'objet
+     * @return Object Retour l'instance de l'objet instancier
     */
     public function AddObject($parent = null,$name = "")
     {
@@ -219,11 +220,11 @@ Class Object {
     }
     
     
-    /*
-     Permet de recuperer un objet enregistrer afin de l'instancier
-     @access public
-     @param string $name_oject Nom de l'objet
-     @return Object Retourne l'instance du type d'objet afin de pouvoir instance un objet
+    /**
+     * Permet de recuperer un objet enregistrer afin de l'instancier
+     * @access public
+     * @param string $name_oject Nom de l'objet
+     * @return Object Retourne l'instance du type d'objet afin de pouvoir instance un objet
      de ce type avec AddObject($parent = null, $name = "") ou null s'il n'existe pas
     */
     public static function GetObject($name_object)
@@ -242,12 +243,12 @@ Class Object {
         }
     }
         
-    /*
-     Permet de selection un ObjetCss Comme pour un Objet Standart (ex: div#id.class)
-     @access public
-     @static
-     @param string $selecteur Le selecteur de l'objetCss , Il est possible de passer une instance d'un Object
-     @return Array Retourne les définitions de l'objet
+    /**
+     * Permet de selection un ObjetCss Comme pour un Objet Standart (ex: div#id.class)
+     * @access public
+     * @static
+     * @param string $selecteur Le selecteur de l'objetCss , Il est possible de passer une instance d'un Object
+     * @return Array Retourne les définitions de l'objet
     */
     public static function SCss($selecteur)
     {
@@ -274,22 +275,22 @@ Class Object {
     	return $definitions;
     }
     
-    /*
-     Permet de récuperer les déffinition css de l'objet courant
-     @access public
-     @return Array Retourne les définitions de l'objet
+    /**
+     * Permet de récuperer les déffinition css de l'objet courant
+     * @access public
+     * @return Array Retourne les définitions de l'objet
     */
     public function GetDefinitionsCss()
     {
 		return Object::Scss($this);
     }
     
-    /*
-     C'est le constructeur d'un objet 2D ou 3D
-     @access public
-     @param Object $parent Objet parent
-     @param string $name Nom de l'objet
-     @return Object Retourne l'instance de l'objet
+    /**
+     * C'est le constructeur d'un objet 2D ou 3D
+     * @access public
+     * @param Object $parent Objet parent
+     * @param string $name Nom de l'objet
+     * @return Object Retourne l'instance de l'objet
     */
     public function __construct($parent=null,$name="")
     {
@@ -328,9 +329,9 @@ Class Object {
         return $this;
     }
     
-    /*
-     Permet d'effacer l'objet courant
-     @access public
+    /**
+     * Permet d'effacer l'objet courant
+     * @access public
     */
     public function ClearObject()
     {
@@ -341,10 +342,10 @@ Class Object {
         ApplicationLIS::GetModule("Canvas")->ClearRect($positionX,$positionY,$positionX + $this->Width,$positionY + $this->Height);
     }
     
-    /*
-     Permet de retourner les classes sous forme de classe contaténé (ex: .class1.class2.class3)
-     @access public
-     @return string retourne les classes sous forme de classe contaténé (ex: .class1.class2.class3)
+    /**
+     * Permet de retourner les classes sous forme de classe contaténé (ex: .class1.class2.class3)
+     * @access public
+     * @return string retourne les classes sous forme de classe contaténé (ex: .class1.class2.class3)
     */
     public function ToStringClasses()
     {
@@ -352,11 +353,11 @@ Class Object {
         return ".".implode(".", $this->classes);
     }
     
-    /*
-     Défini l'id de l'objet
-     @access public
-     @param string $value L'id de l'objet
-     @return Object Retourne l'instance de l'objet courant
+    /**
+     * Défini l'id de l'objet
+     * @access public
+     * @param string $value L'id de l'objet
+     * @return Object Retourne l'instance de l'objet courant
     */
     public function SetId($valeur)
     {
@@ -364,11 +365,11 @@ Class Object {
         return $this;
     }
     
-    /*
-     Ajoute une classe à l'objet
-     @access public
-     @param string $valeur Classe de l'objet
-     @return Object Retourne l'instance de l'objet courant
+    /**
+     * Ajoute une classe à l'objet
+     * @access public
+     * @param string $valeur Classe de l'objet
+     * @return Object Retourne l'instance de l'objet courant
     */
     public function addClass($valeur)
     {
@@ -383,11 +384,11 @@ Class Object {
         return $this;
     }
     
-    /*
-     Supprime une des classes à l'objet
-     @access public
-     @param string $valeur Classe à supprimer
-     @return Object Retourne l'instance de l'objet courant
+    /**
+     * Supprime une des classes à l'objet
+     * @access public
+     * @param string $valeur Classe à supprimer
+     * @return Object Retourne l'instance de l'objet courant
     */
     public function removeClass($valeur)
     {
@@ -402,12 +403,12 @@ Class Object {
         return $this;
     }
     
-    /*
-      Permet de supprimer une classe à une autre
-      @access public
-      @param string $ancienne Ancienne classe
-      @param string $nouvelle Nouvelle classe
-      @return Object Retourne l'instance de l'objet couratn
+    /**
+      * Permet de supprimer une classe à une autre
+      * @access public
+      * @param string $ancienne Ancienne classe
+      * @param string $nouvelle Nouvelle classe
+      * @return Object Retourne l'instance de l'objet couratn
     */
     public function switchClass($ancienne,$nouvelle)
     {
@@ -422,11 +423,11 @@ Class Object {
         return $this;
     }
     
-    /*
-     Permet de supprimer un type d'objet enregister
-     @access public
-     @param string $name Type de l'objet a supprimé
-     @todo Implémenté l'objet
+    /**
+     * Permet de supprimer un type d'objet enregister
+     * @access public
+     * @param string $name Type de l'objet a supprimé
+     * @todo Implémenté l'objet
     */
     public static function UnregisterObject($name)
     {
@@ -434,10 +435,10 @@ Class Object {
 	throw new Exception("Cette fonction n'est pas encore implémenté. Function not implemented");
     }
     
-    /*
-	Destructeur de l'objet
-	Détruit l'objet en mémoire et sur l'affichage
-	@access public
+    /**
+	* Destructeur de l'objet
+	* Détruit l'objet en mémoire et sur l'affichage
+	* @access public
     */
     public function __destruct()
     {
@@ -445,30 +446,30 @@ Class Object {
         $this->ClearObject();
     }
     
-    /*
-       Récupere l'id de l'objet
-       @access public
-       @return integer Retourne l'id de l'objet
+    /**
+       * Récupere l'id de l'objet
+       * @access public
+       * @return integer Retourne l'id de l'objet
     */
     public function GetId()
     {
         $this->id=$id;
     }
         
-    /*
-      Récupére les classes de l'objet
-      @access public
-      @return Array Retourne les classes de l'objet
+    /**
+      * Récupére les classes de l'objet
+      * @access public
+      * @return Array Retourne les classes de l'objet
     */
     public function GetClass()
     {
         return $this->classes;
     }
     
-    /*
-     Récupére le nom de l'objet
-     @access public
-     @return string Retourne le nom de l'objet
+    /**
+     * Récupére le nom de l'objet
+     * @access public
+     * @return string Retourne le nom de l'objet
     */
     public function GetNom()
     {
@@ -476,22 +477,22 @@ Class Object {
     	return get_class($this);
     }
     
-    /*
-     Méthode déssinant l'objet par défaut
-     @todo Crée une interface Object et ajouter cette méthode
-     @access public
+    /**
+     * Méthode déssinant l'objet par défaut
+     * @todo Crée une interface Object et ajouter cette méthode
+     * @access public
     */
     public function DrawnObject()
     {
         
     }
     
-    /*
-      Permet de sélectione un objet unique avec un sélécteur d'objet (ex: RECTANGLE#gauche.box)
-      @access public
-      @static
-      @param string sélécteur de l'objet
-      @return Object Retourne l'instance de l'objet selectionée
+    /**
+      * Permet de sélectione un objet unique avec un sélécteur d'objet (ex: RECTANGLE#gauche.box)
+      * @access public
+      * @static
+      * @param string sélécteur de l'objet
+      * @return Object Retourne l'instance de l'objet selectionée
     */
     public static function S1($selecteur)
     {
@@ -499,13 +500,13 @@ Class Object {
         return current(Object::S($selecteur));
     }
     
-    /*
-      Permet de sélectioner plusieur objet et de récuperer un Proxy dé sélection (ex: RECTANGLE#gauche.box)
-      afin d'apliquer des action globale sur les objets séléctioner
-      @access public
-      @static
-      @param string sélecteur de l'objet
-      @return SProxy Retourne un Proxy de séléction permettatn d'appliquer une action globale sur les objets sélectioner
+    /**
+      * Permet de sélectioner plusieur objet et de récuperer un Proxy dé sélection (ex: RECTANGLE#gauche.box)
+      * afin d'apliquer des action globale sur les objets séléctioner
+      * @access public
+      * @static
+      * @param string sélecteur de l'objet
+      * @return SProxy Retourne un Proxy de séléction permettatn d'appliquer une action globale sur les objets sélectioner
     */
     public static function SProxy($selecteurs)
     {
@@ -513,12 +514,12 @@ Class Object {
     	return new SProxy(Object::S($selecteurs));
     }
     
-    /*
-      Permet de sélectioner plus objet avec un sélecteur d'objet (ex: RECTANGLE#gauche.box)
-      @access public
-      @static
-      @param string sélecteur de l'objet
-      @return Array Retourne un tableau d'objets correspondant à la séléction
+    /**
+      * Permet de sélectioner plus objet avec un sélecteur d'objet (ex: RECTANGLE#gauche.box)
+      * @access public
+      * @static
+      * @param string sélecteur de l'objet
+      * @return Array Retourne un tableau d'objets correspondant à la séléction
     */
     public static function S($selecteurs)
     {
@@ -611,21 +612,21 @@ Class Object {
         return $objets;
     }
     
-    /*
-     Permet de récuperer la listes des enfant d'un objet
-     @access public
-     @return Array Retourne un tableau d'objet
+    /**
+     * Permet de récuperer la listes des enfant d'un objet
+     * @access public
+     * @return Array Retourne un tableau d'objet
     */
     public function GetChildrens()
     {
         return $this->childrens;
     }
     
-    /*
-      Permet de récuperer un enfant de l'objet par son nom($name) s'il n'existe pas sa renvoie null
-      @access public
-      @param string $name nom de l'objet
-      @return Object Retourne l'enfant ou null s'il n'existe pas
+    /**
+      * Permet de récuperer un enfant de l'objet par son nom($name) s'il n'existe pas sa renvoie null
+      * @access public
+      * @param string $name nom de l'objet
+      * @return Object Retourne l'enfant ou null s'il n'existe pas
     */
     public function GetChildren($name)
     {
@@ -633,11 +634,11 @@ Class Object {
         return $this->childrens[$name];
     }
     
-    /*
-     Permet d'attacher un objet à un autre en tant qu'enfant
-     @access public
-     @param Object $childrens Instance de l'objet enfant
-     @param string $name Nom de l'objet
+    /**
+     * Permet d'attacher un objet à un autre en tant qu'enfant
+     * @access public
+     * @param Object $childrens Instance de l'objet enfant
+     * @param string $name Nom de l'objet
     */
     public function AddChildren($children,$name="")
     {
@@ -647,11 +648,11 @@ Class Object {
         $this->childrens[$name] = $children;
     }
     
-    /*
-     Permet de détacher un enfant à un parent (c'est cruelle hinhin...)
-     @access public
-     @param string $name Nom de l'objet
-     @return Boolean
+    /**
+     * Permet de détacher un enfant à un parent (c'est cruelle hinhin...)
+     * @access public
+     * @param string $name Nom de l'objet
+     * @return Boolean
     */
     public function RemoveChildren($name)
     {
@@ -662,11 +663,11 @@ Class Object {
         return true;
     }
     
-    /*
-      Déssine tous les objets mis à jour y compris les enfants
-      @access public
-      @static
-      @param Object $parent Branche parent d'ou on part récursivement vers les enfants , null si ont part de l'objet principale
+    /**
+      * Déssine tous les objets mis à jour y compris les enfants
+      * @access public
+      * @static
+      * @param Object $parent Branche parent d'ou on part récursivement vers les enfants , null si ont part de l'objet principale
     */
     public static function DrawnAllObjects($parent=null)
     {
@@ -715,11 +716,11 @@ Class Object {
         }
     }
 
-    /*
-     Permet de savoir si la souris est sur un objet avec l'objet en parametre
-     @access public
-     @param Object $objet Instance de l'objet
-     @return boolean Retourne true si la souris est sur l'objet sinon false
+    /**
+     * Permet de savoir si la souris est sur un objet avec l'objet en parametre
+     * @access public
+     * @param Object $objet Instance de l'objet
+     * @return boolean Retourne true si la souris est sur l'objet sinon false
     */
     private function IsMouseInObject($objet)
     {
@@ -749,13 +750,13 @@ Class Object {
         }
     }
     
-    /*
-     Permet de définir les handle pour un objet
-     @access public
-     @param EventProxy $mousemove Définit l'handle pour la position de la souris
-     @param EventProxy $mouseclick Définit l'handle pour le click de la souris
-     @param EventProxy $mousedblclick Défini l'handle pour le doubleclick de la souris
-     @return Object Retourne l'instance de l'objet courant
+    /**
+     * Permet de définir les handle pour un objet
+     * @access public
+     * @param EventProxy $mousemove Définit l'handle pour la position de la souris
+     * @param EventProxy $mouseclick Définit l'handle pour le click de la souris
+     * @param EventProxy $mousedblclick Défini l'handle pour le doubleclick de la souris
+     * @return Object Retourne l'instance de l'objet courant
     */
     public function SetHandleMouse($mousemove = null,$mouseclick = null,$mousedblclick = null)
     {
@@ -766,11 +767,11 @@ Class Object {
         return $this;
     }
     
-    /*
-     Permet de définir l'handle pour la position de la souris
-     @access public
-     @param EventProxy $mousemove Définit l'handle pour la position de la souris
-     @return Object Retourne l'instance de l'objet courant
+    /**
+     * Permet de définir l'handle pour la position de la souris
+     * @access public
+     * @param EventProxy $mousemove Définit l'handle pour la position de la souris
+     * @return Object Retourne l'instance de l'objet courant
     */
     public function SetHandleMouseMove($mousemove)
     {
@@ -778,11 +779,11 @@ Class Object {
         return $this;
     }
     
-    /*
-    Permet de définir l'handle pour le click de la souris
-    @access public
-    @param EventProxy $mouseclick Définit l'handle pour le click de la souris
-    @return Object Retourne l'instance de l'objet courant
+    /**
+    * Permet de définir l'handle pour le click de la souris
+    * @access public
+    * @param EventProxy $mouseclick Définit l'handle pour le click de la souris
+    * @return Object Retourne l'instance de l'objet courant
     */
     public function SetHandleMouseClick($mouseclick)
     {
@@ -790,11 +791,11 @@ Class Object {
         return $this;
     }
     
-    /*
-    Permet de définir l'handle  pour le doubleclick de la souris
-    @access public
-    @param EventProxy $mouseclick Définit l'handle pour le click de la souris
-    @return Object Retourne l'instance de l'objet courant
+    /**
+    * Permet de définir l'handle  pour le doubleclick de la souris
+    * @access public
+    * @param EventProxy $mouseclick Définit l'handle pour le click de la souris
+    * @return Object Retourne l'instance de l'objet courant
     */
     public function SetHandleMouseDblClick($mousedblclick)
     {
@@ -802,12 +803,12 @@ Class Object {
         return $this;
     }
     
-    /*
-     Permet d'informer que la souris à cliquer à position donner
-     La fonction s'occupe d'informer le(s) objet(s) concernée
-     @access public
-     @param integer $x Position X de la souris
-     @param integer $y Position Y de la souris
+    /**
+     * Permet d'informer que la souris à cliquer à position donner
+     * La fonction s'occupe d'informer le(s) objet(s) concernée
+     * @access public
+     * @param integer $x Position X de la souris
+     * @param integer $y Position Y de la souris
     */
     public static function MouseClick($x,$y)
     {
@@ -830,12 +831,12 @@ Class Object {
     	}
     }
     
-    /*
-     Permet d'informer que la souris à double cliquer à position donner
-     La fonction s'occupe d'informer le(s) objet(s) concernée
-     @access public
-     @param integer $x Position X de la souris
-     @param integer $y Position Y de la souris
+    /**
+     * Permet d'informer que la souris à double cliquer à position donner
+     * La fonction s'occupe d'informer le(s) objet(s) concernée
+     * @access public
+     * @param integer $x Position X de la souris
+     * @param integer $y Position Y de la souris
     */
     public static function MouseDblClick($x,$y)
     {
@@ -857,12 +858,12 @@ Class Object {
     	}
     }
     
-    /*
-     Permet d'informer que la souris bouger à position donner
-     La fonction s'occupe d'informer le(s) objet(s) concernée
-     @access public
-     @param integer $x Position X de la souris
-     @param integer $y Position Y de la souris
+    /**
+     * Permet d'informer que la souris bouger à position donner
+     * La fonction s'occupe d'informer le(s) objet(s) concernée
+     * @access public
+     * @param integer $x Position X de la souris
+     * @param integer $y Position Y de la souris
     */
     public static function MouseMove($x,$y)
     {

@@ -1,17 +1,18 @@
 <?php
-/*
-  Script d'inclusion du framework lis et de ces dÈpendances
-  @author Jean pasqualini <jpasqualini75@gmail.com>
-  @license GPL
-  @version InDev
+/**
+  * Script d'inclusion du framework lis et de ces d√©pendances
+  * @author Jean pasqualini <jpasqualini75@gmail.com>
+  * @license GPL
+  * @version InDev
+  * @package FrameworkLis
 */
 
 // Reporte toutes les erreurs php
 error_reporting(E_ALL);
 
-/*
-  Inclut de facon automatique les application instancier
-  @param string $class_name Le nom de l'application
+/**
+  * Inclut de facon automatique les application instancier
+  * @param string $class_name Le nom de l'application
 */
 function __autoload($class_name)
 {
@@ -28,11 +29,11 @@ function __autoload($class_name)
 // tableaux d'erreur 
 $error=array();
 
-include("lis/Interface.php");               // Fichier d'interface des methode obligatoire des module de rendu afin de les standarisÈ
+include("lis/Interface.php");               // Fichier d'interface des methode obligatoire des module de rendu afin de les standaris√©
 include("lis/WS.class.php");                // Soccupe de la communiquation avec le client
 include("lis/cssparser.class.php");         // Permet de parser les fichier css
 include("lis/error.php");                   // Prend le relais pour gerer les erreur php sout meme
-include("config/color.application.php");    // Declare les diffÈrence couleur primaire utiliser dans l'application (a voir l'utilitÈ)
+include("config/color.application.php");    // Declare les diff√©rence couleur primaire utiliser dans l'application (a voir l'utilit√©)
 include("config/config.application.php");   // Contient la configuration de l'application lis
 include("lis/ApplicationLIS.class.php");    // Contient la classe application LIS
 include("lis/Object.class.php");            // Permet de gerer tout en objet

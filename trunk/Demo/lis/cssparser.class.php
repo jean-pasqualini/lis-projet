@@ -1,29 +1,30 @@
 <?php
-/*
- Classe pour parser les fichier de définition de design css
- @author internet
- @version InDev
- @license GPL
+/**
+ * Classe pour parser les fichier de définition de design css
+ * @author internet
+ * @version InDev
+ * @license GPL
+ * @package FrameworkLis
 */
 class CssParseur {
   
-  /*
-   @access public
-   @var Array Contient les définitions css
+  /**
+   * @access public
+   * @var Array Contient les définitions css
   */
   public $css;
   
-  /*
-   @access private
-   @staticvar CssParseur Contient l'instance actuelle du parseur
+  /**
+   * @access private
+   * @staticvar CssParseur Contient l'instance actuelle du parseur
   */
   private static $instance;
   
-  /*
-   Parse une chaine contenant du css et retourne un tableau de propriété
-   @access public
-   @param string $str chaine css
-   @return Array Retourne un tableau de ObjectCss qui contient chacun une définition selecteur { propriété1: valeur; propriété2: valeur; }
+  /**
+   * Parse une chaine contenant du css et retourne un tableau de propriété
+   * @access public
+   * @param string $str chaine css
+   * @return Array Retourne un tableau de ObjectCss qui contient chacun une définition selecteur { propriété1: valeur; propriété2: valeur; }
   */
   public function ParseStr($str) {
     $selecteur=array();
@@ -43,7 +44,7 @@ class CssParseur {
 	
 	// On récupere le sélecteur et les propriété en les séparent par {
 	// Le sélecteur dans $keystr et les propriété dans $codestr
-        @list($keystr,$codestr) = explode("{",$part);
+       list($keystr,$codestr) = explode("{",$part);
 	
 	// On récupere dans un tableau les sélecteurs multipe du sélecteur séparré par une virgule
         $keys = explode(",",trim($keystr));
@@ -105,7 +106,7 @@ class CssParseur {
 		    $code = trim($code);
 		    
 		    // On récupere la propriété de chaque ligne dans $codekey et la valeur dans $codevalue en séparant avec :
-		    @list($codekey, $codevalue) = explode(":",$code);
+		    list($codekey, $codevalue) = explode(":",$code);
 		    
 		    // On vérifie bien que la propriété n'est pas vie
 		    if(strlen($codekey) > 0) {
@@ -127,9 +128,9 @@ class CssParseur {
     return $selecteur;
   }
   
-  /*
-   Recupére l'instance unique du parseur css
-   @return CssParseur Retourne l'instance unique du parseur
+  /**
+   * Recupére l'instance unique du parseur css
+   * @return CssParseur Retourne l'instance unique du parseur
   */
   public static function GetInstance()
   {
@@ -140,12 +141,12 @@ class CssParseur {
   	return new CssParseur();
   }
   
-  /*
-    Méthode pour parser un css qui retourne un tableau de propriété
-    @static
-    @access public
-    @param string $filename
-    @return Array Retourne le tableau de propriété
+  /**
+    * Méthode pour parser un css qui retourne un tableau de propriété
+    * @static
+    * @access public
+    * @param string $filename
+    * @return Array Retourne le tableau de propriété
   */
   public function Parse($filename) {
       return $this->ParseStr(file_get_contents($filename));
