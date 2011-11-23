@@ -75,7 +75,7 @@ Abstract Class ApplicationLIS {
    * @return ApplicationLIS Retourne l'instance courante de l'application
   */
   public function __construct($address,$port){
-    
+		
     ApplicationLIS::$UniqueInstance = $this;
         
     global $_CONFIGURATION; // Permet d'acceder de facon global au donnée de configuration déclarer 
@@ -86,7 +86,7 @@ Abstract Class ApplicationLIS {
    
     // IMPORTANT : SUPPRIME LA BARIERE DES 30 SECONDES
     set_time_limit(0);
-   
+      
     // L'envoi implicite signifie que toute fonction qui envoie des données au navigateur verra ses données envoyées immédiatement
     ob_implicit_flush();
     
@@ -94,26 +94,26 @@ Abstract Class ApplicationLIS {
     if(($socket = socket_create(AF_INET, SOCK_STREAM, 0)) === false)
     {
 	    // Si elle ne se charge pas alors on affiche une erreur indiquant que la socket n'a pas pu étre crée
-	    echo 'La création de la socket a échoué : '.socket_strerror($socket)."\n<br />";
+	    throw SocketException($socket, 'La création de la socket a échoué : '.socket_strerror($socket)."\n<br />");
     }
         
     //On assigne la socket é une adresse et é un port, que l'on va écouter par la suite.
     if(($assignation = socket_bind($socket, $address, $port)) < 0)
     {
 	    // Si elle ne s'assigne pas alors on affiche une erreur indiquant que l'assignation é échoué
-	    echo "L'assignation de la socket a échoué : ".socket_strerror($assignation)."\n<br />";
+	    throw SocketException($socket, "L'assignation de la socket a échoué : ".socket_strerror($assignation)."\n<br />");
     }
         
     //On prépare l'écoute.
     if(($ecoute = socket_listen($socket)) === false)
     {
-	    echo "L'écoute de la socket a échoué : ".socket_strerror($ecoute)."\n<br />";
+	    throw SocketException($socket, "L'écoute de la socket a échoué : ".socket_strerror($ecoute)."\n<br />");
 	  
 	  // Si le client n'a pas pu se connecter alors...
           if(($client = socket_accept($socket)) === false)
           {
 	    // On affiche un message d'information pour dire que le client n'a pas pu se connecter
-            echo "Le client n'a pas pu se connecter : ".socket_strerror($client)."\n<br />";
+            throw SocketException($client, "Le client n'a pas pu se connecter : ".socket_strerror($client)."\n<br />");
             
             $this->disconnect();
             
@@ -126,8 +126,8 @@ Abstract Class ApplicationLIS {
           // Ici charge les modules de rendu (négociation client/server a implementer) 
               
           // On verifie la configuration des modules principaux pour l'audio et l'affichage et si ceux-ci ne se chargent pas alors on génére une erreur
-          if (!count($_CONFIGURATION['MODULE']['audio'])) {  trigger_error("Module de rendu audio non configurée",E_USER_NOTICE); }
-          if (!count($_CONFIGURATION['MODULE']['view'])) {  trigger_error("Module de rendu view non configurée",E_USER_NOTICE); }
+          if (!count($_CONFIGURATION['MODULE']['audio'])) {  throw new LisException("Module de rendu audio non configurée"); }
+          if (!count($_CONFIGURATION['MODULE']['view'])) {  throw new LisException("Module de rendu view non configurée"); }
     
             // On parcour tous les modules de rendu disponible tout les modules
             foreach($_CONFIGURATION['MODULE'] as $name_module => $liste_rendu)
@@ -155,6 +155,10 @@ Abstract Class ApplicationLIS {
           
             return true;
 	}
+	else 
+	{
+		throw new SocketException($socket, "Aucune client ne s'est rattaché à l'application");
+	}
 }
 
 /**
@@ -166,16 +170,25 @@ Abstract Class ApplicationLIS {
 public static function GetInstance()
 {
 	// Si l'application n'a pas encore été instancie alors...
-	if (ApplicationLIS::$UniqueInstance == null) {
+	if (ApplicationLIS::$UniqueInstance === null) {
 		/**
 		 On genere une erreur pour dire que l'application n'est pas initialiser
 		 et donc qu'on ne peut pas retourner l'instance
 		*/
-		trigger_error("Erreur application non initialiser",E_USER_ERROR); 
-		exit();
+		echo "# ";
+		//return null;
+		throw new LisException("application non initialiser"); 
 	}
 	// Sinon on retourne l'instance
 	return ApplicationLIS::$UniqueInstance;
+}
+
+public static function AppAutoLoad($classname)
+{
+	if(file_exists($classname.".application.class.php"))
+	{
+		require_once($classname.".application.class.php");
+	}
 }
 
 /**
@@ -210,7 +223,7 @@ public static function GetModule($name_module)
     else
     {
 	// Sinon on génére une erreur pour dire que le module requis n'est pas chargée
-        trigger_error("[GRAVE] Le module requis (".$name_module.") n'est pas charge actuellement !!!",E_USER_ERROR);
+        throw new ModuleNotLoadedException("Le module requis (".$name_module.") n'est pas charge actuellement !!!");
     }
 }
 
@@ -272,6 +285,55 @@ public function __call($name,$arguments)
     return false;
 }
 
+/**
+ * Récupere les noms des modules chargées par l'application
+ * @access public
+ * @return Array les noms des modules chargées par l'application
+ */
+public static function getNameModules()
+{
+	return array_keys(ApplicationLIS::$modules);	
+}
+
+/**
+ * Récupére les instances de modules chargées par l'application
+ * @access public
+ * @return Array les instances de modules chargées par l'applicaiton
+ */
+public static function getModules()
+{
+	return ApplicationLIS::$modules;
+}
+
+/**
+ * Récupere l'ip de l'applicaiton 
+ * @access public
+ * @return string L'ip de l'application
+ */
+public function getIp()
+{
+	return "0.0.0.0";	
+}
+
+/**
+ * Récupere le port de l'application
+ * @access public
+ * @return int Le port de l'application
+ */
+public function getPort()
+{
+	return "0";	
+}
+
+/**
+ * Définit la ressource socket client
+ * @access public
+ * @param Socket Ressour ce la socket
+ */
+public function setSocket($value)
+{
+	$this->instance = $value;
+}
 
 
 /**

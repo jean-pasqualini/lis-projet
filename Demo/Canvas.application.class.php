@@ -25,7 +25,16 @@ class Canvas extends ApplicationLIS {
      * @var Object Contient la souris sous forme d'objet afficher a l'écran
     */
     private $souris;
+	
+	public static $notconstructor = false;
         
+	public static function NotConstructor()
+	{
+		Canvas::$notconstructor = true;
+		return new canvas("127.0.0.1","1601");
+	}
+		
+		
     /**
      * Le contructeur de l'application canvas
      * @access public
@@ -34,7 +43,13 @@ class Canvas extends ApplicationLIS {
      * @return Canvas Retourne l'instance de l'application 'Canvas'
     */
     public function __construct ($address,$port)
-    {
+    {	
+    	// Simule une instanciation sans constructeur
+    	if(Canvas::$notconstructor === true) {
+    		ApplicationLIS::$UniqueInstance = $this;
+			return;
+		}
+		
         // Lance l'attente de la connection d'un client lis
         parent::__construct($address,$port);
 	

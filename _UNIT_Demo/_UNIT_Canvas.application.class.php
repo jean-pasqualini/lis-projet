@@ -1,21 +1,56 @@
 <?php
-	$dir_include = getcwd()."/../Demo/:".getcwd()."/";
+	if (!defined('PHPUnit_MAIN_METHOD')) {
+    	define('PHPUnit_MAIN_METHOD', '_UNIT_Canvas::main');
+	}
 
-	set_include_path($dir_include);
+	//require_once "Canvas.application.class.php";
 	
-    require_once "ApplicationLis.php";
-	require_once "Canvas.application.class.php";
-	
+	/**
+	 * Class pour les test unitaire de l'application canvas
+	 * @author jean pasqualini <jpasqualini75@gmail.com>
+	 * @license GPL
+	 * @version InDev
+	 */
 	class _UNIT_Canvas extends PHPUnit_Framework_TestCase {
 		
-		public function setUp(){
-			$this->test = new Canvas("127.0.0.1", 1601);
+		
+		public static function main(){
+			$suite = new PHPUnit_Framework_TestSuite("_UNIT_Canvas");
+			$result = PHPUnit_TextUI_TestRunner::run($suite);
 		}
 		
-		public function testName(){
-			$jason = $this->test->getName();
-			$this->assertTrue($jason == "Jason");
+		/**
+		 * Cette méthode est appelé avant l'exécution des tests
+		 * @access public
+		 */
+		public function setUp(){
+			/*
+				$temp = new ReflectionClass("Canvas");
+				$this->test = $temp->newInstanceWithoutConstructor();
+			*/
+			echo "Instanciation de l'application...\r\n";
+						
+			// On instancie l'application canvas
+			//$this->test = Canvas::NotConstructor();
+		}
+		
+		/**
+		 * Le test de la méthode qui récupere l'instance de l'application
+		 * @access public
+		 * @expectedException LisException
+		 */
+		public function testIntance(){
+			
+				$instance =  ApplicationLIS::GetInstance();
+
+				$this->assertNotNull($instance, "L'instance est null");
+				$this->assertInstanceOf("ApplicationLIS", $instance);
 		}
 	}
+		
+// Call MyClassTest::main() if this source file is executed directly.
+if(PHPUnit_MAIN_METHOD == '_UNIT_Canvas::main') {
+    _UNIT_Canvas::main();
+}
 	
 ?>
