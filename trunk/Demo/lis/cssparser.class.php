@@ -21,6 +21,18 @@ class CssParseur {
   private static $instance;
   
   /**
+   * @access private
+   * @var string contient le chemin d'acces au fichier css 
+   */
+  private $file;
+  
+  /**
+   * @access private
+   * @var int numéro de ligne en cour de parse
+   */
+  private $ligne  = 0;
+  
+  /**
    * Parse une chaine contenant du css et retourne un tableau de propriété
    * @access public
    * @param string $str chaine css
@@ -35,16 +47,23 @@ class CssParseur {
     
     // Parse le code css présent
     $parts = explode("}",$str);
-    
+    	
     // S'il ya des élement css alors...
     if(count($parts) > 0) {
       
       // On parcour ces élement
       foreach($parts as $part) {
-	
+				
+	 $this->ligne++;	
+				
 	// On récupere le sélecteur et les propriété en les séparent par {
 	// Le sélecteur dans $keystr et les propriété dans $codestr
-       list($keystr,$codestr) = explode("{",$part);
+       $temp = explode("{", $part);
+       
+	   if(count($temp) != 2) throw new CssParseException($this, "Le fichier ne contient aucune définition");
+	   
+	   
+       list($keystr,$codestr) = $temp;
 	
 	// On récupere dans un tableau les sélecteurs multipe du sélecteur séparré par une virgule
         $keys = explode(",",trim($keystr));
@@ -88,7 +107,7 @@ class CssParseur {
 			// On récupere les classe 
               		foreach($matches[1] as $classe)
               		{
-				// Et on les ajoute à l'objet css
+						// Et on les ajoute à l'objet css
               			$selecteur[$key]->AddClasse($classe);
               		}
               	}
@@ -101,12 +120,20 @@ class CssParseur {
 		  
 		  // On parcour ces ligne
 		  foreach($codes as $code) {
-		    
+		    	
+		    $this->ligne++;			
+			
 		    // Suprimé les espace ou autre caractère invisible
 		    $code = trim($code);
 		    
 		    // On récupere la propriété de chaque ligne dans $codekey et la valeur dans $codevalue en séparant avec :
-		    list($codekey, $codevalue) = explode(":",$code);
+		    $tempcode = explode(":",$code);
+		    
+		    if(count($tempcode) != 2) {
+		    	throw new CssParseException($this, "Erreur dans la chaine css");
+		    }
+		    
+		    list($codekey, $codevalue) = $tempcode;
 		    
 		    // On vérifie bien que la propriété n'est pas vie
 		    if(strlen($codekey) > 0) {
@@ -130,6 +157,8 @@ class CssParseur {
   
   /**
    * Recupére l'instance unique du parseur css
+   * @access public
+   * @static
    * @return CssParseur Retourne l'instance unique du parseur
   */
   public static function GetInstance()
@@ -142,6 +171,26 @@ class CssParseur {
   }
   
   /**
+   * Recupere le numéro de ligne en cours de parse
+   * @access public
+   * @return int Le numéro de ligne
+   */
+  public function getLine()
+  {
+	return $this->ligne;
+  }
+  
+  /**
+   * Recupere le nom du fichier css
+   * @access public
+   * @return string Le nom du fichier css
+   */
+  public function getFile()
+  {
+  	return $this->file;
+  }
+  
+  /**
     * Méthode pour parser un css qui retourne un tableau de propriété
     * @static
     * @access public
@@ -149,6 +198,8 @@ class CssParseur {
     * @return Array Retourne le tableau de propriété
   */
   public function Parse($filename) {
+  	  $this->file = $filename;
+	
       return $this->ParseStr(file_get_contents($filename));
   }
   
