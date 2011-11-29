@@ -7,9 +7,9 @@
  * @package FrameworkLis
 */
 
-set_exception_handler(array("LisException","handleException"));
-set_error_handler("errorToException");
-register_shutdown_function("FatalerrorToException");
+//set_exception_handler(array("LisException","handleException"));
+//set_error_handler("errorToException");
+//register_shutdown_function("FatalerrorToException");
 
 function FatalerrorToException()
 {
@@ -192,6 +192,8 @@ class SocketException extends  LisException {
  */
 class ModuleNotLoadedException extends LisException {
 	
+	private $instanceModule;
+	
 	/**
 	 * Le constructeur de l'exeception de module non chargé
 	 * @access public
@@ -199,9 +201,10 @@ class ModuleNotLoadedException extends LisException {
 	 * @param string $message Message d'erreur
 	 * @return SocketException Instance de l'exeception de module non chargé
 	 */
-	public function __construct($file, $message)
+	public function __construct($file, $instance, $message)
 	{
-		$this->setFile("module/".$file.".php");
+		$this->instanceModule = $instance;
+		if(file_exists("module/".$file.".php")) $this->setFile("module/".$file.".php");
 		parent::__construct($message);
 	}
 }

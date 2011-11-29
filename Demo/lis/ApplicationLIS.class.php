@@ -175,7 +175,7 @@ public static function GetInstance()
 		 On genere une erreur pour dire que l'application n'est pas initialiser
 		 et donc qu'on ne peut pas retourner l'instance
 		*/
-		echo "# ";
+
 		//return null;
 		throw new LisException("application non initialiser"); 
 	}
@@ -239,7 +239,7 @@ public static function IssetModule($name_module)
     // Si le module n'existe pas alors
     if(empty(ApplicationLIS::$modules[$name_module]))
     {
-	// On retourne false pour dire que la condition est fause
+		// On retourne false pour dire que la condition est fause
         return false;
     }
     elseif(!is_object(ApplicationLIS::$modules[$name_module]))
@@ -370,14 +370,14 @@ public function AddModule($module,$parametre = array())
             if(!ApplicationLIS::IssetModule($dependence_name))
             {
 		// On génére une erreur
-                trigger_error("module ".$module." dependence ".$dependence_name." non satisfaite !",E_USER_NOTICE);
+                throw new ModuleNotLoadedException($module, $instance_module, "module ".$module." dependence ".$dependence_name." non satisfaite !");
                 return null;
             }
             elseif(ApplicationLIS::GetModule($dependence_name)->GetVersion()!=$dependence_values["Version"])
             {
 		// Si la dépendence existe mais que la version de la dépendance exigée n'est pas celle de la dépendence existance
 		// Alors on génére une erreur
-                trigger_error("module ".$module." dependence ".$dependence_name." non statisfaite pour la version demandée!",E_USER_NOTICE);
+                throw new ModuleNotLoadedException($module, $instance_module, "module ".$module." dependence ".$dependence_name." non statisfaite pour la version demandée!");
                 return null;
             }
         }
@@ -392,7 +392,7 @@ public function AddModule($module,$parametre = array())
         if(strpos(get_class($instance_module),"module_")===false && $instance_module instanceof IModuleBase && $instance_module instanceof ModuleBase )
         {
 	    // On génere une erreur pour dire que le moduel n'est pas compatible
-            trigger_error("module (".$name_module.") not module compatible !",E_USER_NOTICE);
+            throw new ModuleNotLoadedException($module, null, "module (".$name_module.") not module compatible !");
             return null;
         }
         
@@ -402,7 +402,7 @@ public function AddModule($module,$parametre = array())
     else
     {
 	// Sinon on génere une erreur pour dire que le module n'est pas disponible
-        trigger_error("module ".$module." not aviable !",E_USER_NOTICE);
+        throw new ModuleNotLoadedException($module, null, "module ".$module." not aviable !");
         return null;
     }
     
