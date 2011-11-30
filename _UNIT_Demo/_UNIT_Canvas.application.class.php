@@ -60,14 +60,14 @@
 		 * Le test de l'ajout de module a chaud
 		 * @access public
 		 * 
-		 * @expectedException LisException Une Exception lis à été levée
-		 * @expectedException ModuleNotLoadedException Un module n'a pas pu être chargée
+		 * @expectedException ModuleNotLoadedException cette exteion est bien géneé
 		 */
 		public function testAddModule()
 		{
-			$this->setExpectedException("ModuleNotLoadedException");
-			
+			throw new ModuleNotLoadedException("toto", null, "coucou c moi");
+				
 			$module = $this->test->AddModule("test");
+			$this->fail("true");
 			
 			//$this->assetNull($module);
 		}
