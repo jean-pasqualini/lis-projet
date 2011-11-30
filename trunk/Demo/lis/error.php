@@ -105,7 +105,7 @@ class LisException extends Exception
 	$ÎnfoApplication = new ReflectionObject($this->Application);
 
 	echo "=============================="."\r\n";
-	echo "Erreur | ".date("d/m/y h:i")." : ".$this->getFile()." (".$this->getLine().") \r\n";
+	echo get_class($this)." | ".date("d/m/y h:i")." : ".$this->getFile()." (".$this->getLine().") \r\n";
 	echo "Message d'erreur : ".$this->getMessage()."\r\n";
 	echo "Nom de l'application : ".$ÎnfoApplication->getName()."\r\n";
 	echo "Fichier main de l'application : ".$ÎnfoApplication->getFileName()."\r\n";
