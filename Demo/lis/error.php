@@ -45,7 +45,6 @@ class LisException extends Exception
 		
         parent::__construct($message,0);
         $this->showError();
-        exit();
     }
     
     public function SetFile($value)
