@@ -56,18 +56,30 @@
 			$this->assertInstanceOf("ApplicationLIS", $instance);
 		}
 		
+		public function cc()
+		{
+			throw new ModuleNotLoadedException("toto", null, "coucou c moi");
+		}
+		
+		//@expectedException ModuleNotLoadedException cette extension est bien géneé
 		/**
 		 * Le test de l'ajout de module a chaud
 		 * @access public
 		 * 
-		 * @expectedException ModuleNotLoadedException cette exteion est bien géneé
+		 * 
 		 */
 		public function testAddModule()
 		{
-			throw new ModuleNotLoadedException("toto", null, "coucou c moi");
-				
-			$module = $this->test->AddModule("test");
-			$this->fail("true");
+			
+			try {
+				$this->cc();
+			}
+			catch(ModuleNotLoadedException $e)
+			{
+				echo $e->getMessage();
+			}
+			//$module = $this->test->AddModule("test");
+			//$this->fail("true");
 			
 			//$this->assetNull($module);
 		}
