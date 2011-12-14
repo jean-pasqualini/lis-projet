@@ -27,6 +27,8 @@
 		public static function main(){
 			$suite = new PHPUnit_Framework_TestSuite("_UNIT_Canvas");
 			$result = PHPUnit_TextUI_TestRunner::run($suite);
+			
+			return $suite;
 		}
 		
 		/**
@@ -61,25 +63,16 @@
 			throw new ModuleNotLoadedException("toto", null, "coucou c moi");
 		}
 		
-		//@expectedException ModuleNotLoadedException cette extension est bien géneé
 		/**
 		 * Le test de l'ajout de module a chaud
 		 * @access public
 		 * 
-		 * 
+		 * @expectedException ModuleNotLoadedException cette extension est bien géneé
 		 */
 		public function testAddModule()
 		{
 			
-			try {
-				$this->cc();
-			}
-			catch(ModuleNotLoadedException $e)
-			{
-				echo $e->getMessage();
-			}
-			//$module = $this->test->AddModule("test");
-			//$this->fail("true");
+			$module = $this->test->AddModule("test");
 			
 			//$this->assetNull($module);
 		}
