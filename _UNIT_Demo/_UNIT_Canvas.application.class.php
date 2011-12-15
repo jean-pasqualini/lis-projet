@@ -57,25 +57,26 @@
 			$this->assertNotNull($instance, "L'instance est null");
 			$this->assertInstanceOf("ApplicationLIS", $instance);
 		}
-		
-		public function cc()
-		{
-			throw new ModuleNotLoadedException("toto", null, "coucou c moi");
-		}
-		
+
+		//$this->setExpectedException("ModuleNotLoadedException");
 		/**
 		 * Le test de l'ajout de module a chaud
 		 * @access public
-		 * 
-		 * @expectedException ModuleNotLoadedException cette extension est bien géneé
+		 * @expectedException ModuleNotLoadedException
 		 */
+		public function testModuleNotModuleLoadedException()
+		{
+			$module = $this->test->AddModule("test");			
+		}
+		
 		public function testAddModule()
 		{
+			$module = $this->test->AddModule("canvas");
 			
-			$module = $this->test->AddModule("test");
-			
-			//$this->assetNull($module);
+			$this->assertNotNull($module);
+			$this->assert
 		}
+		
 	}
 		
 // Call MyClassTest::main() if this source file is executed directly.
