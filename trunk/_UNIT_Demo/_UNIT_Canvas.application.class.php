@@ -12,6 +12,15 @@
 
 	}
 
+class InterceptCommunicationLis {
+	private $instanceLis;
+	
+	public function __construct($instanceLis)
+	{
+		$this->instanceLis = $instanceLis;	
+	}
+}
+
 	//require_once "Canvas.application.class.php";
 	
 	/**
@@ -43,6 +52,8 @@
 						
 			// On instancie l'application canvas
 			$this->test = Canvas::NotConstructor();
+			
+			$this->test->setSocket(new InterceptCommunicationLis($this->test));
 		}
 		
 		/**
@@ -59,8 +70,9 @@
 		}
 
 		//$this->setExpectedException("ModuleNotLoadedException");
+		
 		/**
-		 * Le test de l'ajout de module a chaud
+		 * Le test de l'ajout de module non existant a chaud
 		 * @access public
 		 * @expectedException ModuleNotLoadedException
 		 */
@@ -69,14 +81,61 @@
 			$module = $this->test->AddModule("test");			
 		}
 		
-		public function testAddModule()
+		/**
+		 * Le test de l'ajout du module Canvas a chaud 
+		 * @access public 
+		 */
+		public function testAddModuleCanvas()
 		{
 			$module = $this->test->AddModule("canvas");
 			
 			$this->assertNotNull($module);
-			$this->assert
+			$this->assertInstanceOf("IModuleBase", $module);
+			$this->assertInstanceOf("ModuleBase", $module);
+			$this->assertInstanceOf("module_canvas", $module);
+		}
+
+		/**
+		 * Le test de l'ajout du module CanvasObject a chaud 
+		 * @access public 
+		 */
+		public function testAddModuleCanvasObject()
+		{
+			$module = $this->test->AddModule("CanvasObject");
+			
+			$this->assertNotNull($module);
+			$this->assertInstanceOf("IModuleBase", $module);
+			$this->assertInstanceOf("ModuleBase", $module);
+			$this->assertInstanceOf("module_CanvasObject", $module);
+		}
+
+		/**
+		 * Le test de l'ajout du module InterfaceKM a chaud 
+		 * @access public 
+		 */
+		public function testAddModuleInterfaceKM()
+		{
+			$module = $this->test->AddModule("InterfaceKM");
+			
+			$this->assertNotNull($module);
+			$this->assertInstanceOf("IModuleBase", $module);
+			$this->assertInstanceOf("ModuleBase", $module);
+			$this->assertInstanceOf("module_InterfaceKM", $module);
 		}
 		
+		/**
+		 * Le test de l'ajout du module UserInterface a chaud 
+		 * @access public 
+		 */
+		public function testAddModuleUserInterface()
+		{
+			$module = $this->test->AddModule("UserInterface");
+			
+			$this->assertNotNull($module);
+			$this->assertInstanceOf("IModuleBase", $module);
+			$this->assertInstanceOf("ModuleBase", $module);
+			$this->assertInstanceOf("module_UserInterface", $module);
+		}	
 	}
 		
 // Call MyClassTest::main() if this source file is executed directly.

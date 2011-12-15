@@ -354,7 +354,7 @@ public function AddModule($module,$parametre = array())
     	echo "[INFO] chargement du module '".$module."'\n";
 	
 	// Alors on l'inclu
-        include("module/".$module.".php");
+        require_once("module/".$module.".php");
 	
 	// On instancie la classe du module 
         $render="module_".$module;
