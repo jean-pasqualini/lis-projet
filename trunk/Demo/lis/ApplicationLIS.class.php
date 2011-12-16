@@ -121,8 +121,10 @@ Abstract Class ApplicationLIS {
           }
           
 	  // On strocke la ressource socket cliente dans la propriété $instance
-          $this->instance=$client;
+          $this->instance=new SocketClient($client);
               
+			
+			  
           // Ici charge les modules de rendu (négociation client/server a implementer) 
               
           // On verifie la configuration des modules principaux pour l'audio et l'affichage et si ceux-ci ne se chargent pas alors on génére une erreur
@@ -207,7 +209,7 @@ public static function GetCss()
  * @access public
  * @static
  * @param string $name_module Nom du module
- * @return ModuleBase Retourne l'instance du module
+ * @return IModuleBase Retourne l'instance du module
 */
 public static function GetModule($name_module)
 {
@@ -223,7 +225,7 @@ public static function GetModule($name_module)
     else
     {
 	// Sinon on génére une erreur pour dire que le module requis n'est pas chargée
-        throw new ModuleNotLoadedException("Le module requis (".$name_module.") n'est pas charge actuellement !!!");
+        throw new ModuleNotLoadedException($name_module, null, "Le module requis (".$name_module.") n'est pas charge actuellement !!!");
     }
 }
 
@@ -460,28 +462,7 @@ public function send($msg){
 	
 	// On envoie les donée au client sous forme json
 	$msg=json_encode($msg)."\r\n";
-	socket_write($this->instance,$msg,strlen($msg));
-}
-
-/**
- * Permet de simuler un timeout de socket
- * @param Socket Ressource de la socket
- * @return boolean true si la socket a toujour des donée sinon false
-*/
-public function is_socket($socket)
-{
-	// On stocke la socket dans un tableau
-	$socks = array($socket);
-	$TMP=array();
-	
-	// On appele la selection de la socket 
-	socket_select($socks,$TMP,$TMP,0,0);
-
-	// Et on retourne true si la socket est tjr dans le tableau de retour $TMP
-	if(in_array($socket, $socks)) {
-		return true;
-	} else { return false;
-	}
+	$this->instance->write($msg);
 }
 
 /**
@@ -567,10 +548,10 @@ public function handle_recv()
 	$chrono=time();
 	
 	// On utilise le simulateur de timeout pour savoir quand il n'y a plus de donée é tratier
-	while($this->is_socket($this->instance))
+	while($this->instance->isSocket())
 	{
 		// On lit les donée		 
-		$data=socket_read($this->instance,$taille,PHP_NORMAL_READ);
+		$data=$this->instance->read();
 		 
 		//echo "Data : ".$data."\n";
 		
@@ -640,7 +621,7 @@ public function handle_recv()
 public function disconnect(){
     
 	// On ferme la socket de connection cliente
-	socket_close($this->instance);
+	$this->instance->close();
 }
 
 

@@ -1,23 +1,36 @@
 <?php
-	if (!defined('PHPUnit_MAIN_METHOD')) {
-    	define('PHPUnit_MAIN_METHOD', '_UNIT_Canvas::main');
-		$dir_include = get_include_path().":".getcwd()."/../Demo/";
-
-		set_include_path($dir_include);
-		
-		chdir(getcwd()."/../Demo/");
-		
-		require_once "_UNIT_Canvas.application.class.php";
-	    require_once "ApplicationLis.php";
-
-	}
+require_once("_UNIT_Configuration.php");
 
 class InterceptCommunicationLis {
 	private $instanceLis;
+	private $bufferread;
+	//private $bufferwrite;
 	
 	public function __construct($instanceLis)
 	{
 		$this->instanceLis = $instanceLis;	
+	}
+	
+	public function write($msg)
+	{
+		echo "Ecriture du buffer : \r\n".print_r(json_decode($msg), true)."\r\n";
+		
+		$this->bufferread .= $msg;
+	}
+	
+	public function isSocket()
+	{
+		if(!empty($this->bufferread));
+	}
+		
+	public function read($taille = 2048)
+	{
+		return $this->bufferread;
+	}
+	
+	public function close()
+	{
+		socket_close($this->socket);
 	}
 }
 
@@ -94,6 +107,20 @@ class InterceptCommunicationLis {
 			$this->assertInstanceOf("ModuleBase", $module);
 			$this->assertInstanceOf("module_canvas", $module);
 		}
+		
+		/**
+		 * Le test de l'ajout du module InterfaceKM a chaud 
+		 * @access public 
+		 */
+		public function testAddModuleInterfaceKM()
+		{
+			$module = $this->test->AddModule("InterfaceKM");
+			
+			$this->assertNotNull($module);
+			$this->assertInstanceOf("IModuleBase", $module);
+			$this->assertInstanceOf("ModuleBase", $module);
+			$this->assertInstanceOf("module_InterfaceKM", $module);
+		}
 
 		/**
 		 * Le test de l'ajout du module CanvasObject a chaud 
@@ -107,20 +134,6 @@ class InterceptCommunicationLis {
 			$this->assertInstanceOf("IModuleBase", $module);
 			$this->assertInstanceOf("ModuleBase", $module);
 			$this->assertInstanceOf("module_CanvasObject", $module);
-		}
-
-		/**
-		 * Le test de l'ajout du module InterfaceKM a chaud 
-		 * @access public 
-		 */
-		public function testAddModuleInterfaceKM()
-		{
-			$module = $this->test->AddModule("InterfaceKM");
-			
-			$this->assertNotNull($module);
-			$this->assertInstanceOf("IModuleBase", $module);
-			$this->assertInstanceOf("ModuleBase", $module);
-			$this->assertInstanceOf("module_InterfaceKM", $module);
 		}
 		
 		/**

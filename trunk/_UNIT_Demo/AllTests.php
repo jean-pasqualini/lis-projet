@@ -9,6 +9,7 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 	chdir(getcwd()."/../Demo/");
 	
 	require_once "_UNIT_Canvas.application.class.php";
+	require_once "module/_UNIT_Canvas.php";
     require_once "ApplicationLis.php";
 	
 }
@@ -26,6 +27,7 @@ class AllTests
     {
         $suite = new PHPUnit_Framework_TestSuite('All Tests');
         $suite->addTest(_UNIT_Canvas::main());
+		$suite->addTest(_UNIT_module_Canvas::main());
 
     }
 }
