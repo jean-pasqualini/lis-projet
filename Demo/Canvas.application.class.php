@@ -57,13 +57,10 @@ class Canvas extends ApplicationLIS {
 		$this->AddModule("InterfaceKM");
 		
 		// Ajout du Module ClientProxy (inutile ici)
-		$this->AddModule("ModuleClientProxy");
+		//$this->AddModule("ModuleClientProxy");
 		
 		// Définit pour handle de position de la souris un objet de type EventProxy qui contient ici une fonction anonyme
-		$this->SetHandle_mouse_move(new EventProxy(function($x,$y)
-		{
-			echo "La souris a bouger a ".$x.",".$y;
-		}));
+		$this->SetHandle_mouse_move($this);
 		
 		// Ajout du module 'CanvasObject' pour la gestion des canvas en objet 
 		$this->AddModule("CanvasObject");

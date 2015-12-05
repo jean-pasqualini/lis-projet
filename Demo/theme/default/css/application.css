@@ -1,26 +1,7 @@
-/*
-**********************************************************************
-            Canvas | Design by jean pasqualini
-**********************************************************************
-Ce fichier permet de definir le design de mon application lis
-
-Le selecteur application contient toutes les propriete de mon application main
-
-height definie la largeur
-width definie la hauteur
-cursor permet de definir un curseur externe ou un curseur en ressouce externe precalcule
-type le type d'image de sortie de mon application
-quality la quality si le type est du jpeg compresser
-
-Les style sont stocké dans $this->css->selecteur objet et/ou calque->propriete=valeur
-
-*/
-
 Application {
     taille: 1024x600;
     /* la taille de l'application en définisant largeur et hauteur séparer par 'x' */
-    cursor: rond 0|255|0;
-
+    cursor: rond;
     background: red;
 }
 

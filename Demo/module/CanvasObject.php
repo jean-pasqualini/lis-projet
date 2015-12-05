@@ -129,6 +129,7 @@ Class RECTANGLE extends Object2D
     // On parametre la couleur de fond
     ApplicationLIS::GetModule("Canvas")->FillStyle($this->Background);
     
+    echo "ICIII";
     // On désssine le rectangle
     ApplicationLIS::GetModule("Canvas")->FillRect($this->GetAbsolutePositionX(), $this->GetAbsolutePositionY(), $this->Width, $this->Height);
   }

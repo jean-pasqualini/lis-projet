@@ -25,6 +25,8 @@ if (!is_numeric($_SERVER['argv'][1]))
     exit();
 }
 
+echo "########### ECOUTE SUR ".$_SERVER['argv'][1].PHP_EOL;
+
 // On instancie l'application sur l'adresse d'ecouté 127.0.0.1 avec le port passé en paramétre
 new Canvas("127.0.0.1",$_SERVER['argv'][1]);
 ?>

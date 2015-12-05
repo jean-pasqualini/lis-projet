@@ -122,7 +122,7 @@ Class module_Canvas extends ModuleBase implements IModuleBase
   */
   public function beginPath()
   {
-    $data=array("Type" => "view" , "Action" => "beginPath");
+    $data=array("Type" => "Canvas" , "Action" => "beginPath");
     $this->send($data);
     if(!$this->recv()) { return false; } else { return true; }
   }
@@ -134,7 +134,7 @@ Class module_Canvas extends ModuleBase implements IModuleBase
   */
   public function closePath()
   {
-    $data=array("Type" => "view" , "Action" => "closePath");
+    $data=array("Type" => "Canvas" , "Action" => "closePath");
     $this->send($data);
     if(!$this->recv()) { return false; } else { return true; }
   }
@@ -150,7 +150,8 @@ Class module_Canvas extends ModuleBase implements IModuleBase
   */
   public function FillRect($x,$y,$w,$h)
   {
-    $data=array("Type" => "view" , "Action" => "FillRect" , "X" => $x, "Y" => $y , "W" => $w , "H" => $h);
+    echo "RECEPTION";
+    $data=array("Type" => "Canvas" , "Action" => "FillRect" , "X" => $x, "Y" => $y , "W" => $w , "H" => $h);
     $this->send($data);
     if(!$this->recv()) { return false; } else { return true; }
   }
@@ -166,7 +167,7 @@ Class module_Canvas extends ModuleBase implements IModuleBase
   */
   public function StrokeRect($x,$y,$w,$h)
   {
-    $data=array("Type" => "view" , "Action" => "StrokeRect" , "X" => $x, "Y" => $y , "W" => $w , "H" => $h);
+    $data=array("Type" => "Canvas" , "Action" => "StrokeRect" , "X" => $x, "Y" => $y , "W" => $w , "H" => $h);
     $this->send($data);
     if(!$this->recv()) { return false; } else { return true; }
   }
@@ -182,7 +183,7 @@ Class module_Canvas extends ModuleBase implements IModuleBase
   */
   public function ClearRect($x,$y,$w,$h)
   {
-    $data=array("Type" => "view" , "Action" => "ClearRect" , "X" => $x, "Y" => $y , "W" => $w , "H" => $h);
+    $data=array("Type" => "Canvas" , "Action" => "ClearRect" , "X" => $x, "Y" => $y , "W" => $w , "H" => $h);
     $this->send($data);
     if(!$this->recv()) { return false; } else { return true; }
   }
@@ -198,7 +199,7 @@ Class module_Canvas extends ModuleBase implements IModuleBase
     if($this->FillStyle == $value) { return true; } else { $this->FillStyle = $value; }
     
     if(is_object($value)) { $gradient=true; $value=$value->Getname(); } else { $gradient=false; }
-    $data=array("Type" => "view" , "Action" => "FillStyle" , "value" => $value , "Gradient" => $gradient);
+    $data=array("Type" => "Canvas" , "Action" => "FillStyle" , "value" => $value , "Gradient" => $gradient);
     $this->send($data);
     if(!$this->recv()) { return false; } else { return true; }
   }
@@ -214,7 +215,7 @@ Class module_Canvas extends ModuleBase implements IModuleBase
   {
     if($this->StrokeStyle == $value) { return true; } else { $this->StrokeStyle = $value; }
         
-    $data=array("Type" => "view" , "Action" => "StrokeStyle", "value" => $value , "Gradient" => $gradient);
+    $data=array("Type" => "Canvas" , "Action" => "StrokeStyle", "value" => $value , "Gradient" => $gradient);
     $this->send($data);
     if(!$this->recv()) { return false; } else { return true; }
   }
@@ -228,7 +229,7 @@ Class module_Canvas extends ModuleBase implements IModuleBase
   */
   public function MoveTo($x,$y)
   {
-    $data=array("Type" => "view" , "Action" => "MoveTo" , "X" => $x , "Y" => $y);
+    $data=array("Type" => "Canvas" , "Action" => "MoveTo" , "X" => $x , "Y" => $y);
     $this->send($data);
     if(!$this->recv()) { return false; } else { return true; }
   }
@@ -244,7 +245,7 @@ Class module_Canvas extends ModuleBase implements IModuleBase
   */
   public function QuadraticCurveTo($cp1x,$cp1y,$x,$y)
   {
-    $data=array("Type" => "view" , "Action" => "QuadraticCurveTo" , "Cp1x" => $cp1x, "Cp1y" => $cp1y , "X" => $x, "Y" => $y);
+    $data=array("Type" => "Canvas" , "Action" => "QuadraticCurveTo" , "Cp1x" => $cp1x, "Cp1y" => $cp1y , "X" => $x, "Y" => $y);
     $this->send($data);
     if(!$this->recv()) { return false; } else { return true; }
   }
@@ -262,7 +263,7 @@ Class module_Canvas extends ModuleBase implements IModuleBase
   */
   public function BezierCurveTo($cp1x,$cp1y,$cp2x,$cp2y,$x,$y)
   {
-    $data=array("Type" => "view" , "Action" => "BezierCurveTo" , "Cp1x" => $cp1x, "Cp1y" => $cp1y , "Cp2x" => $cp2x, "Cp2y" => $cp2y , "X" => $x , "Y" => $y);
+    $data=array("Type" => "Canvas" , "Action" => "BezierCurveTo" , "Cp1x" => $cp1x, "Cp1y" => $cp1y , "Cp2x" => $cp2x, "Cp2y" => $cp2y , "X" => $x , "Y" => $y);
     $this->send($data);
     if(!$this->recv()) { return false; } else { return true; }
   }
@@ -280,7 +281,7 @@ Class module_Canvas extends ModuleBase implements IModuleBase
   */
   public function Arc($x,$y,$rayon,$startAngle,$endAngle,$gauche = "true")
   {
-    $data=array("Type" => "view" , "Action" => "Arc" , "X" => $x , "Y" => $y,"Rayon" => $rayon, "StartAngle" => $startAngle, "EndAngle" => $endAngle, "Gauche" => $gauche);
+    $data=array("Type" => "Canvas" , "Action" => "Arc" , "X" => $x , "Y" => $y,"Rayon" => $rayon, "StartAngle" => $startAngle, "EndAngle" => $endAngle, "Gauche" => $gauche);
     $this->send($data);
     if(!$this->recv()) { return false; } else { return true; }
   }
@@ -297,7 +298,7 @@ Class module_Canvas extends ModuleBase implements IModuleBase
   */
   public function CreateLinearGradient($gradient,$x1,$y1,$x2,$y2)
   {
-    $data=array("Type" => "view" , "Action" => "CreateLinearGradient" , "Gradient" => $gradient ,"X1" => $x1 , "Y1" => $y1 , "X2" => $x2 , "Y2" => $y2);
+    $data=array("Type" => "Canvas" , "Action" => "CreateLinearGradient" , "Gradient" => $gradient ,"X1" => $x1 , "Y1" => $y1 , "X2" => $x2 , "Y2" => $y2);
     $this->send($data);
     if(!$this->recv()) { return false; } else { return true; }
   }
@@ -317,7 +318,7 @@ Class module_Canvas extends ModuleBase implements IModuleBase
   public function CreateRadialGradient($gradient,$x1,$y1,$StartRayon,$x2,$y2,$EndRayon)
   {
     $data=array(array(
-                  "Type" => "view" ,
+                  "Type" => "Canvas" ,
                   "Action" => "CreateRadialGradient" ,
                   "Gradient" => $gradient ,
                   "X1" => $x1 ,
@@ -341,7 +342,7 @@ Class module_Canvas extends ModuleBase implements IModuleBase
   */
   public function AddColorToGradient($gradient,$value,$offset=0)
   {
-    $data=array("Type" => "view" , "Action" => "AddColorToGradient" , "Offset" => $offset , "Gradient" => $gradient , "value" => $value);
+    $data=array("Type" => "Canvas" , "Action" => "AddColorToGradient" , "Offset" => $offset , "Gradient" => $gradient , "value" => $value);
     $this->send($data);
     if(!$this->recv()) { return false; } else { return true; }
   }
@@ -359,7 +360,7 @@ Class module_Canvas extends ModuleBase implements IModuleBase
     $this->size = $taille;
     $this->font = $police;
     
-    $data=array("Type" => "view" , "Action" => "font" , "value" => $taille." ".$police);
+    $data=array("Type" => "Canvas" , "Action" => "font" , "value" => $taille." ".$police);
     $this->send($data);
     if(!$this->recv()) { return false; } else { return true; }
   }
@@ -374,7 +375,7 @@ Class module_Canvas extends ModuleBase implements IModuleBase
   */
   public function TextFill($value,$x,$y)
   {
-    $data=array("Type" => "view" , "Action" => "TextFill" , "value" => $value , "X" => $x , "Y" => $y);
+    $data=array("Type" => "Canvas" , "Action" => "TextFill" , "value" => $value , "X" => $x , "Y" => $y);
     $this->send($data);
     if(!$this->recv()) { return false; } else { return true; }
   }
@@ -389,7 +390,7 @@ Class module_Canvas extends ModuleBase implements IModuleBase
   */
   public function TextStroke($value, $x, $y)
   {
-    $data=array("Type" => "view" , "Action" => "TextStroke" , "value" => $value , "X" => $x , "Y" => $y);
+    $data=array("Type" => "Canvas" , "Action" => "TextStroke" , "value" => $value , "X" => $x , "Y" => $y);
     $this->send($data);
     if(!$this->recv()) { return false; } else { return true; }
   }
@@ -402,7 +403,7 @@ Class module_Canvas extends ModuleBase implements IModuleBase
   */
   public function SetWidth($value)
   {
-    $data=array("Type" => "view" , "Action" => "SetWidth" , "value" => $value);
+    $data=array("Type" => "Canvas" , "Action" => "SetWidth" , "value" => $value);
     $this->send($data);
     if(!$this->recv()) { return false; } else { return true; }
   }
@@ -415,7 +416,7 @@ Class module_Canvas extends ModuleBase implements IModuleBase
   */
   public function SetHeight($value)
   {
-    $data=array("Type" => "view" , "Action" => "SetHeight" , "value" => $value);
+    $data=array("Type" => "Canvas" , "Action" => "SetHeight" , "value" => $value);
     $this->send($data);
     if(!$this->recv()) { return false; } else { return true; }
   }
@@ -428,7 +429,7 @@ Class module_Canvas extends ModuleBase implements IModuleBase
   */
   public function SetGlobalAlpha($value)
   {
-    $data=array("Type" => "view" , "Action" => "SetGlobalAlpha" , "value" => $value);
+    $data=array("Type" => "Canvas" , "Action" => "SetGlobalAlpha" , "value" => $value);
     $this->send($data);
     if(!$this->recv()) { return false; } else { return true; }
   }
@@ -444,7 +445,7 @@ Class module_Canvas extends ModuleBase implements IModuleBase
   */
   public function SetCompositeOperation($value)
   {
-    $data=array("Type" => "view" , "Action" => "SetCompositeOperation" , "value" => $value);
+    $data=array("Type" => "Canvas" , "Action" => "SetCompositeOperation" , "value" => $value);
     $this->send($data);
     if(!$this->recv()) { return false; } else { return true; }
   }
@@ -457,7 +458,7 @@ Class module_Canvas extends ModuleBase implements IModuleBase
   */
   public function SetLineWidth($value)
   {
-    $data=array("Type" => "view" , "Action" => "SetLineWidth" , "value" => $value);
+    $data=array("Type" => "Canvas" , "Action" => "SetLineWidth" , "value" => $value);
     $this->send($data);
     if(!$this->recv()) { return false; } else { return true; }
   }

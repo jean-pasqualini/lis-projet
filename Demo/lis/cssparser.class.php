@@ -40,6 +40,7 @@ class CssParseur {
   */
   public function ParseStr($str) {
     $selecteur=array();
+return $selecteur;
     
     // Supprime les commentaire de la chaine css
     

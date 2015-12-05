@@ -105,9 +105,9 @@ Abstract Class ApplicationLIS {
     }
         
     //On prépare l'écoute.
-    if(($ecoute = socket_listen($socket)) === false)
+    if(($ecoute = socket_listen($socket)) !== false)
     {
-	    throw SocketException($socket, "L'écoute de la socket a échoué : ".socket_strerror($ecoute)."\n<br />");
+	    //throw SocketException($socket, "L'écoute de la socket a échoué : ".socket_strerror($ecoute)."\n<br />");
 	  
 	  // Si le client n'a pas pu se connecter alors...
           if(($client = socket_accept($socket)) === false)
@@ -159,6 +159,7 @@ Abstract Class ApplicationLIS {
 	}
 	else 
 	{
+echo PHP_EOL."@@@@".gettype($socket)."@@@@@".PHP_EOL;
 		throw new SocketException($socket, "Aucune client ne s'est rattaché à l'application");
 	}
 }
@@ -219,6 +220,7 @@ public static function GetModule($name_module)
     // Si le module existe alors
     if(isset(ApplicationLIS::$modules[$name_module]))
     {
+      echo $name_module." => ".get_class(ApplicationLIS::$modules[$name_module]).PHP_EOL;
 	// On le retourne
         return ApplicationLIS::$modules[$name_module];
     }
@@ -459,7 +461,6 @@ public function ImportCss($file)
 public function send($msg){
 	// Qui se charge de dispatcher les différentes ressource dans ce qu'il recoie
 	//$this->recv_evenementiel();
-	
 	// On envoie les donée au client sous forme json
 	$msg=json_encode($msg)."\r\n";
 	$this->instance->write($msg);
@@ -552,8 +553,13 @@ public function handle_recv()
 	{
 		// On lit les donée		 
 		$data=$this->instance->read();
+
+    if(empty($data))
+    {
+      return;
+    }
 		 
-		//echo "Data : ".$data."\n";
+		//echo "Data : '".$data."'\n";
 		
 		// On transforme les donée json en tableau
 		$data = json_decode($data,true);
@@ -581,7 +587,7 @@ public function handle_recv()
 
 				// On affiche un message d'information indiquant que c'est un évenemtn
 				echo "C'est un evenement\n";
-			reak;
+			break;
 			
 			// Sinon
 			default:
