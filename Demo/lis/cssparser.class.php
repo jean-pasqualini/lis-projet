@@ -47,6 +47,8 @@ class CssParseur {
     
     // Parse le code css présent
     $parts = explode("}",$str);
+
+	$parts = array_filter($parts, function($item) { return trim($item) != ''; });
     	
     // S'il ya des élement css alors...
     if(count($parts) > 0) {
@@ -60,7 +62,9 @@ class CssParseur {
 	// Le sélecteur dans $keystr et les propriété dans $codestr
        $temp = explode("{", $part);
        
-	   if(count($temp) != 2) throw new CssParseException($this, "Le fichier ne contient aucune définition");
+	   if(count($temp) != 2) {
+	   		throw new CssParseException($this, "Le fichier ne contient aucune définition");
+	   }
 	   
 	   
        list($keystr,$codestr) = $temp;
@@ -111,20 +115,26 @@ class CssParseur {
               			$selecteur[$key]->AddClasse($classe);
               		}
               	}
-		
+
 		// On sépare les ligne des propriété css avec ;
 		$codes = explode(";",$codestr);
-		
+
+		$codes = array_filter($codes, function($item) { return trim($item) != ''; });
+
 		// On vérifié qu'il ya bien des ligne de propriété css
 		if(count($codes) > 0) {
 		  
 		  // On parcour ces ligne
 		  foreach($codes as $code) {
-		    	
+
 		    $this->ligne++;			
 			
 		    // Suprimé les espace ou autre caractère invisible
 		    $code = trim($code);
+
+			if ($code == '') {
+				continue;
+			}
 		    
 		    // On récupere la propriété de chaque ligne dans $codekey et la valeur dans $codevalue en séparant avec :
 		    $tempcode = explode(":",$code);

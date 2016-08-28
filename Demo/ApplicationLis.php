@@ -10,6 +10,7 @@
 // Reporte toutes les erreurs php
 error_reporting(E_ALL);
 
+include("lis/Socket.php");
 include("lis/Interface.php");               // Fichier d'interface des methode obligatoire des module de rendu afin de les standarisé
 include("lis/WS.class.php");                // Soccupe de la communiquation avec le client
 include("lis/cssparser.class.php");         // Permet de parser les fichier css

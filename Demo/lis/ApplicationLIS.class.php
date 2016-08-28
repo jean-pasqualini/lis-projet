@@ -96,7 +96,7 @@ Abstract Class ApplicationLIS {
 	    // Si elle ne se charge pas alors on affiche une erreur indiquant que la socket n'a pas pu étre crée
 	    throw SocketException($socket, 'La création de la socket a échoué : '.socket_strerror($socket)."\n<br />");
     }
-        
+
     //On assigne la socket é une adresse et é un port, que l'on va écouter par la suite.
     if(($assignation = socket_bind($socket, $address, $port)) < 0)
     {
@@ -105,10 +105,8 @@ Abstract Class ApplicationLIS {
     }
         
     //On prépare l'écoute.
-    if(($ecoute = socket_listen($socket)) === false)
+    if(($ecoute = socket_listen($socket)) === true)
     {
-	    throw SocketException($socket, "L'écoute de la socket a échoué : ".socket_strerror($ecoute)."\n<br />");
-	  
 	  // Si le client n'a pas pu se connecter alors...
           if(($client = socket_accept($socket)) === false)
           {
@@ -159,6 +157,7 @@ Abstract Class ApplicationLIS {
 	}
 	else 
 	{
+        throw SocketException($socket, "L'écoute de la socket a échoué : ".socket_strerror($ecoute)."\n<br />");
 		throw new SocketException($socket, "Aucune client ne s'est rattaché à l'application");
 	}
 }
@@ -447,7 +446,6 @@ public function ImportCss($file)
 {
     $css = new CssParseur();
     $t=$css->Parse("theme/".$this->theme."/css/".$file);
-    var_dump($t);
     unset($t);
 }
 
@@ -586,7 +584,7 @@ public function handle_recv()
 			// Sinon
 			default:
 				// On affiche un message d'information pour dire que c'est une action de type inconu
-				echo "C'est un inconu\n";
+				echo "C'est un inconu => " . print_r($data, true) . "\n";
 				return false;
 			break;
 			 

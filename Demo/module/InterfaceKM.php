@@ -179,8 +179,6 @@ class module_InterfaceKM extends ModuleBase implements IModuleBase {
             {
                 $this->positionX=$data["X"];
                 $this->positionY=$data["Y"];
-                
-                print_r($data);
                 //echo "X: ".$data->X." , Y: ".$data->Y."\n";
             }
         }

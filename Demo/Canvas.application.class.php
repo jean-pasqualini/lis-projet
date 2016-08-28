@@ -72,10 +72,18 @@ class Canvas extends ApplicationLIS {
 		$this->AddModule("UserInterface");
 			
 		// Cree un objet de type 'ROND' qui sera la souris
-		$this->souris=Object::GetObject("ROND")->AddObject();
+		$this->souris=
+            Object::GetObject("ROND")
+                ->AddObject()
+        ;
 		
 		// Cree un rectangle de 150x150 avec pour classe max
-		$Rectangle1=Object::GetObject("RECTANGLE")->AddObject()->Set(0,0,150,150)->addClass("max");
+		$Rectangle1=
+            Object::GetObject("RECTANGLE")
+                ->AddObject()
+                ->Set(0, 0, 150, 150)
+                ->addClass('max')
+        ;
 		
 		// Ordonne de dessiner tous les ojbet précédament crée sur la sortie de l'application
 		Object::DrawnAllObjects();

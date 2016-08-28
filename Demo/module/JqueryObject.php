@@ -74,8 +74,8 @@ Class module_JqueryObject extends ModuleBase implements IModuleBase {
 		
 		// Enregistre l'objet 2D TABS
 		Object::RegisterObject(new TABS());
-		
-		// Enregistre l'objet 2D MODAL
+
+        // Enregistre l'objet 2D MODAL
 		Object::RegisterObject(new MODAL());
 	}
 	
